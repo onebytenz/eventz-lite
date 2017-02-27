@@ -134,7 +134,7 @@ class Eventz_Lite_Admin {
         add_settings_field(
             '_plugin_branding',
             __('Plugin Branding: <span class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
-            'to our web site that would be very much appreciated.&#013;You can choose to display the onebyte logo ' . 
+            'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
             'or a plain text link."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_plugin_branding_cb' ),
             $this->plugin_name . '_general',
@@ -220,7 +220,7 @@ class Eventz_Lite_Admin {
         }
         $username = $this->options['_username'];
         If (!$username) {
-            $request_link = '<a href="http://www.eventfinda.co.nz/api/v2/index" target="_blank">Request Eventfinda API Key</a>';
+            $request_link = '<a name="_apilink" id="_apilink" href="http://www.eventfinda.co.nz/api/v2/index" target="_blank">Request Eventfinda API Key</a>';
         }
         echo '</select> ' . $request_link . "\r\n";
     }
@@ -290,7 +290,7 @@ class Eventz_Lite_Admin {
         $show_plugin_logo = intval($this->options['_show_plugin_logo']);
         $show_plugin_link = intval($this->options['_show_plugin_link']);
         $plugin_logo = '<a href="http://plugin.onebyte.nz" title="Get the plugin for Eventfinda" target="_blank">' . "\r\n" .
-            '<img width="180" height="50" alt="Eventfinda" src="' . $this->eventz_lite_plugin_dir() . 'img/onebyte-eventfinda.png"></a>';
+            '<img width="180" height="50" alt="Eventfinda" src="' . $this->eventz_lite_plugin_dir() . 'img/eventz-lite.png"></a>';
         $plugin_link = '<small><a href="http://plugin.onebyte.nz" title="Get the plugin for Eventfinda" target="_blank">Get Plugin</a></small>';
         if (intval($show_plugin_logo) === 1) {$logo_checked = 'checked';}
         if (intval($show_plugin_link) === 1) {$text_checked = 'checked';}

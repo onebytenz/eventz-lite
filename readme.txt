@@ -8,7 +8,7 @@ Stable tag: 4.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-Easily display events from the Eventfinda API on your web site with a simple shortcode.
+Easily display events from the Eventfinda API on your Wordpress site with a simple shortcode.
 
 == Description ==
 
@@ -49,7 +49,7 @@ This section describes how to install the plugin and get it working.
 
 = How do I refine the result sets? =
 
-Visit http://www.eventfinda.co.nz/api/v2/events and navigate to the "Parameters" section to see the available query paramaters that can be used to retrieve the result sets.
+Visit http://www.eventfinda.co.nz/api/v2/events and navigate to the "Parameters" section to see the available query parameters that can be used to retrieve the result sets.
 
 = I have events listed with Eventfinda, how do I display just those listings? =
 

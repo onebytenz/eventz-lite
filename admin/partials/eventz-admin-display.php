@@ -11,12 +11,12 @@
     <h2><?php echo esc_html(get_admin_page_title());?></h2>
     <h2 id="tabs" class="nav-tab-wrapper">
       <a class="nav-tab nav-tab-active" href="#">General Setup</a>
+      <a class="nav-tab" href="#">Shortcode Guide</a>
     </h2>
     <div id='sections'>    
         <section>
             <form action="options.php" id="eventfindaOptions" method="post">
                 <?php
-                    /*settings_fields($this->plugin_name);*/
                     settings_fields('eventz-lite');
                     do_settings_sections($this->plugin_name . '_general');
                     submit_button();
@@ -25,6 +25,35 @@
                 <div id="login-fail" title="Login Failed"></div>
                 <div id="delete-confirm" title="Delete All Settings?"></div>
             </form>
+        </section>
+        <section>
+            <p><em><strong>How do I use the shortcode?</strong></em><br>
+            Place the shortcode <strong>[eventz-lite]</strong> in any page or post.</p>
+            <p><em><strong>How do I refine the result sets?</strong></em><br>
+            Visit <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda</a> and navigate to the “Parameters” section to see the available query parameters that can be used to retrieve the result sets.</p>
+            <p><em><strong>I have events listed with Eventfinda, how do I display just those listings?</strong></em><br>
+            <strong>[eventz-lite params=”username=myeventfindausername”]</strong></p>
+            <p><strong>The Location Slug:</strong><br>
+            To find your location slug just visit <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda </a>and navigate to the location you would like to display listings for.<br>
+            The location slug is the last string in the url:</p>
+            <p>http://www.eventfinda.co.nz/whatson/events/<a href="http://www.eventfinda.co.nz/whatson/events/auckland-central" target="_blank">auckland-central</a></p>
+            <p>The location slug for the url above is “auckland-central”.<br>
+            <strong>[eventz-lite params=”location_slug=auckland-central”]</strong></p>
+            <p><strong>The Category Slug:</strong><br>
+            To find the category slugs for your country visit your local Eventfinda site and click “Find Events” at the top of the page.<br>
+            When the “Upcoming Events” page has loaded you will see the event categories listed underneath the locations.<br>
+            Click the category you would like to display and get the category slug from the url:</p>
+            <p>http://www.eventfinda.co.nz/<a href="http://www.eventfinda.co.nz/concerts-gig-guide/events/new-zealand" target="_blank">concerts-gig-guide</a>/events/new-zealand</p>
+            <p>The category slug for the url above is “concerts-gig-guide”.<br>
+            <strong>[eventz-lite params=”category_slug=concerts-gig-guide”]</strong></p>
+            <p><strong>Example Shortcodes:</strong></p>
+            <p>Auckland Events:<strong><br>
+            [eventz-lite params=”location_slug=auckland”]</strong><br>
+            Auckland Gig Guide:<strong><br>
+            [eventz-lite params=”location_slug=auckland&amp;category_slug=concerts-gig-guide”]</strong></p>
+            <p>The paramaters for “rows” &amp; “offset” are taken care of by the plugin (results per page in the admin setup).</p>
+            <p>More information on querying the <a href="http://www.eventfinda.co.nz/api/v2/events" target="_blank">Eventfinda API</a><br>
+            <a href="https://plugin.onebyte.nz/eventz-lite/docs/" target="_blank">https://plugin.onebyte.nz/eventz-lite/docs/</a></p>
         </section>
     </div>
 </div>
@@ -113,6 +142,8 @@
             jQuery(this.form).valid();
             if (jQuery('#_username').val() && jQuery('#_password').val()) {
                 jQuery(this).chkuser();
+            } else {
+                jQuery('#_apilink').attr('href', 'http://' + jQuery('#_endpoint').val() + '/api/v2/index');
             }
         });
         jQuery('body').on('change','#_delete_options',function(){
