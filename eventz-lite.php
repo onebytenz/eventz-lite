@@ -7,7 +7,7 @@
  * Plugin Name:       Eventz Lite
  * Plugin URI:        http://plugin.onebyte.nz
  * Description:       Easily display Eventfinda listings on your web site with a simple shortcode.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            onebyte.nz
  * Author URI:        http://onebyte.nz
  * Text Domain:       eventz-lite

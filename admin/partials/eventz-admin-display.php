@@ -19,6 +19,16 @@
                 <?php
                     settings_fields('eventz-lite');
                     do_settings_sections($this->plugin_name . '_general');
+                ?>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th scope="row"><label>Review &amp; Rate?</label></th>
+                        <td>If you like this plugin please <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/">review &amp; rate it.</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <?php
                     submit_button();
                 ?>
                 <div id="login-success" title="Login Successful"></div>

@@ -3,7 +3,7 @@ Contributors: onebytenz
 Donate link: https://plugin.onebyte.nz/donate
 Tags: event, events, eventz, eventfinda, eventfinder, event finda, event finder, concerts, gig guide, exhibitions, festivals, lifestyle, performing arts, sports, outdoors, workshops, seminars, conferences, classes
 Requires at least: 4.6.1
-Tested up to: 4.7.2
+Tested up to: 4.7.3
 Stable tag: 4.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -104,12 +104,19 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.0.2 =
+* Added code to admin class to increment version number after plugin update.
+
+= 1.0.1 =
+* Added dynamic links to request API username & password from Eventfinda based on country selection.
+* Logos changed for plugin site.
+
 = 1.0.0 =
 * Eventz Lite Version 1.0.0 released Feb 2017
 * Eventz Pro Version 2.0.0 released Feb 2017
 
 == Upgrade Notice ==
-
+= 1.0.2 =
+= 1.0.1 =
 = 1.0.0 =
-No upgrades available as yet.
 

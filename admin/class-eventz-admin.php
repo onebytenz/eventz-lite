@@ -18,6 +18,12 @@ class Eventz_Lite_Admin {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
         $this->options = get_option($this->option_name);
+        if ($this->options !== false) {
+            if ($this->options['_version'] !== $version) {
+            $this->options['_version'] = $version;
+            update_option($this->option_name, $this->options);
+        }
+        }
         add_action( 'wp_ajax_check_user', array($this, $this->plugin_name . '_check_user'));
     }
     public function enqueue_styles() {
