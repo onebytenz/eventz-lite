@@ -117,7 +117,60 @@ class Eventz_Lite_Admin {
             '_general',
             array( 'label_for' => '_password' )
         );
-         add_settings_field(
+        add_settings_field(
+            '_display_options_header',
+            __('Listing Display Options: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Select which items to show for each event listing."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_display_options_header_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_display_options_header' )
+        );
+        add_settings_field(
+            '_display_options',
+            __('', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_display_options_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_display_options' )
+        );
+        add_settings_field(
+            '_excerpt',
+            __('Excerpt Length: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Select how many characters to show fo rthe event description."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_excerpt_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_excerpt' )
+        );
+        /*add_settings_field(
+            '_event_location',
+            __('Show Event Location / Venue: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Select to show the location or venue on the listing."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_event_location_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_event_location' )
+        );
+        add_settings_field(
+            '_event_date',
+            __('Show Event Date: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Select to show the event start date on the listing."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_event_date_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_event_date' )
+        );
+        add_settings_field(
+            '_event_category',
+            __('Show Event Category: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Select to show the event ccategory on the listing."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_event_category_cb' ),
+            $this->plugin_name . '_general',
+            '_general',
+            array( 'label_for' => '_event_category' )
+        );*/
+        add_settings_field(
             '_results_pp',
             __('Results Per Page: <span class="dashicons dashicons-editor-help icenter" title="' . 
             'Select how many listings to show per page."></span>', 'eventz-lite' ),
@@ -162,14 +215,19 @@ class Eventz_Lite_Admin {
         $default_values = array (
             '_version' => $this->version,
             '_endpoint' => 'api.eventfinda.co.nz',
-            '_username'  => '',
-            '_password'  => '',
-            '_results_pp'  => '',
-            '_delete_options'   => '0',
-            '_eventfinda_logo'   => '0',
-            '_eventfinda_text'   => '0',
-            '_show_plugin_logo'   => '0',
-            '_show_plugin_link'   => '0'
+            '_username' => '',
+            '_password' => '',
+            '_event_location' => '1',
+            '_event_date' => '1',
+            '_event_category' => '1',
+            '_event_excerpt' => '300',
+            '_event_separator' => '1',
+            '_results_pp' => '',
+            '_delete_options' => '0',
+            '_eventfinda_logo' => '0',
+            '_eventfinda_text' => '0',
+            '_show_plugin_logo' => '0',
+            '_show_plugin_link' => '0'
         );
         if (!is_array($input)) {return $default_values;}
         $values = shortcode_atts($default_values, $input);
@@ -245,8 +303,74 @@ class Eventz_Lite_Admin {
                 '[_password]" id="_password" value="' . $password . '" required>' .
                         "\r\n";
     }
+    public function eventz_lite_display_options_header_cb() { 
+        echo 'Check the options below to enable or disable: ';
+    }
+    public function eventz_lite_display_options_cb() {
+        $loc_checked = '';
+        $date_checked = '';
+        $cat_checked = '';
+        $sep_checked = '';        
+        $show_event_location = intval($this->options['_event_location']);
+        $show_event_date = intval($this->options['_event_date']);
+        $show_event_category = intval($this->options['_event_category']);
+        $show_event_separator = intval($this->options['_event_separator']);
+        if ($show_event_location === 1) {$loc_checked = 'checked';}
+        if ($show_event_date === 1) {$date_checked = 'checked';}
+        if ($show_event_category === 1) {$cat_checked = 'checked';}
+        if ($show_event_separator === 1) {$sep_checked = 'checked';}
+        
+        $str =  '    <fieldset>' . 
+                '        <legend class="screen-reader-text"><span>Listing Display Options</span></legend>' . 
+                '        <label for="_event_location">' . 
+                '        <input type="hidden" name="' . $this->option_name . '[_event_location]" id="_event_location" value="0">' . "\r\n" .
+                '        <input type="checkbox" name="' . $this->option_name . '[_event_location]" id="_event_location" value="1" ' . $loc_checked . '>' . 
+                '        Event Location / Venue</label>' . 
+                '        <br>' . 
+                '        <label for="_event_date">' . 
+                '        <input type="hidden" name="' . $this->option_name . '[_event_date]" id="_event_date" value="0">' . "\r\n" .
+                '        <input type="checkbox" name="' . $this->option_name . '[_event_date]" id="_event_date" value="1" ' . $date_checked . '>' . 
+                '        Event Start Date</label>' . 
+                '        <br>' . 
+                '        <label for="_event_category">' . 
+                '        <input type="hidden" name="' . $this->option_name . '[_event_category]" id="_event_category" value="0">' . "\r\n" .
+                '        <input type="checkbox" name="' . $this->option_name . '[_event_category]" id="_event_category" value="1" ' . $cat_checked . '>' . 
+                '        Event Category</label>' . 
+                '        <br>' . 
+                '        <label for="_event_separator">' . 
+                '        <input type="hidden" name="' . $this->option_name . '[_event_separator]" id="_event_separator" value="0">' . "\r\n" .
+                '        <input type="checkbox" name="' . $this->option_name . '[_event_separator]" id="_event_separator" value="1" ' . $sep_checked . '>' . 
+                '        Event Separator</label>' . 
+                '        <br>' . 
+                '    </fieldset>';
+        echo $str;
+    }
+    public function eventz_lite_excerpt_cb() {
+        $str_options = '';
+        $array = array(
+            1=>"50",
+            2=>"100",
+            3=>"150",
+            4=>"200",
+            5=>"250",
+            6=>"300"
+        );
+        $excerpt_length = intval($this->options['_event_excerpt']);
+        foreach($array as $key => $value) {
+            if (intval($value) === $excerpt_length) {
+                $str_options .= "<option selected value='$value'>$value</option>" . "\r\n";
+            } else {
+                $str_options .=  "<option value='$value'>$value</option>" . "\r\n";
+            }
+        }
+        $str =  '    <fieldset>' . 
+                '        <select name="' . $this->option_name . '[_event_excerpt]" id="_event_excerpt">' . 
+                '       ' . $str_options . 
+                '        </select>' .
+                '    </fieldset>';
+        echo $str;
+    }
     public function eventz_lite_results_pp_cb() {
-        //$results = intval(get_option( $this->option_name . '_results_pp'));
         $results = intval($this->options['_results_pp']);
         $array = array(
             1=>"5",

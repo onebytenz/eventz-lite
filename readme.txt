@@ -66,7 +66,17 @@ http://www.eventfinda.co.nz/whatson/events/auckland-central
 
 The location slug for the url above is "auckland-central".
 
-[eventz-lite params="location_slug=auckland-central"] 
+[eventz-lite params="location_slug=auckland-central"]
+
+The location slug can also be used for venues.
+
+Visit Eventfinda and search for your venue, example “Henderson RSA”.
+
+Events for this venue will be displayed with a link to the venue, for the above example the link is:
+
+https://www.eventfinda.co.nz/venue/henderson-rsa-auckland-west
+
+The location slug to enter for the above example is “henderson-rsa-auckland-west”.
 
 
 The Category Slug:
@@ -104,6 +114,15 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.0.3 =
+* Added configuration options for front end event display.
+* Enable / disable: Event Location / Venue.
+* Enable / disable: Event Date.
+* Enable / disable: Event Category.
+* Select excerpt length: 50 - 300 characters.
+* Styling adjustments for front end event display.
+* readme.txt - extra info for displaying events for a particular venue.
+
 = 1.0.2 =
 * Added code to admin class to increment version number after plugin update.
 
@@ -116,6 +135,7 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 * Eventz Pro Version 2.0.0 released Feb 2017
 
 == Upgrade Notice ==
+= 1.0.3 =
 = 1.0.2 =
 = 1.0.1 =
 = 1.0.0 =

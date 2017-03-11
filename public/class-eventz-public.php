@@ -17,6 +17,11 @@ class Eventz_Lite_Public {
     private $option_name = 'plugin_eventz_lite_options';
     private $username;
     private $password;
+    private $show_location;
+    private $show_date;
+    private $show_category;
+    private $show_separator;
+    private $excerpt_length;
     private $eventfinda_logo;
     private $eventfinda_link;
     private $show_plugin_logo;
@@ -34,6 +39,11 @@ class Eventz_Lite_Public {
         $this->options = get_option($this->option_name);
         $this->username = $this->options['_username'];
         $this->password = $this->options['_password'];
+        $this->show_location = intval($this->options['_event_location']);
+        $this->show_date = intval($this->options['_event_date']);
+        $this->show_category = intval($this->options['_event_category']);
+        $this->show_separator = intval($this->options['_event_separator']);
+        $this->excerpt_length = intval($this->options['_event_excerpt']);
         $this->plugin_endpoint = $this->options['_endpoint'];
         $this->eventfinda_logo = intval($this->options['_eventfinda_logo']);
         $this->show_plugin_logo = intval($this->options['_show_plugin_logo']);
@@ -136,22 +146,48 @@ class Eventz_Lite_Public {
     private function get_event_html ($event) {
         $id = $event->id;
         $name = $event->name;
+        $str_loc = '';
+        $str_dat = '';
+        $str_cat = '';
+        $str_sep = '';
+        $span = '<span class="smaller">[CONTENT]</span>';
         $location_summary = $event->location_summary;
-        $location = str_replace('Great Barrier Island, Great Barrier Island,','Great Barrier Island,',$location_summary);
-        $category = $event->category->name;
-        //$timezone = $event->timezone;
         $datetime_summary = $event->datetime_summary;
         $description = $event->description;
+        $str_des = $description;
+        $l = strlen($description);
+        if ($l > $this->excerpt_length) {
+            $pos = strpos($description, ' ', $this->excerpt_length);
+            $str_des = substr($description, 0, $pos) . '...'; 
+        }
+        if ($this->show_location) {
+            $str_loc = '<br/>' . str_replace('[CONTENT]', 
+                str_replace('Great Barrier Island, Great Barrier Island,',
+                        'Great Barrier Island,',$location_summary), $span);
+        }
+        if ($this->show_date) {
+            $str_dat = '<br/>' . str_replace('[CONTENT]', $datetime_summary, $span);
+        }
+        if ($this->show_category) {
+            $str_cat = str_replace('[CONTENT]', $event->category->name, $span);
+        }
+        if ($this->show_date and $this->show_category) {
+            $str_sep = ' / ' . str_replace('[CONTENT]', $event->category->name, $span);
+        }
+        if ($this->show_separator) {
+            $str_sep = '<hr class="event-sep">';
+        }
         $url = $event->url;
         $template_file = '/partials/events-list.tpl';
         $template = new Eventz_Lite_Template($this->dir . $template_file);          
         $template->set("IMGID", $id);
         $template->set("LINK", $url);
         $template->set("NAME", $name);
-        $template->set("LOCATION", $location);
-        $template->set("TIME", $datetime_summary);
-        $template->set("CATEGORY", $category);
-        $template->set("DESCRIPTION", $description);
+        $template->set("LOCATION", $str_loc);
+        $template->set("TIME", '' . $str_dat);
+        $template->set("CATEGORY", $str_cat);
+        $template->set("DESCRIPTION", $str_des);
+        $template->set("SEPARATOR", $str_sep);
         foreach ($event->images->images as $image) {
             if ($image->is_primary){
                 $template->set("IMG", $this->get_event_image($image));
