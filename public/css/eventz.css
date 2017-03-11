@@ -175,28 +175,24 @@ fieldset {
     padding-bottom: 20px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-    .event-left {
-        padding-bottom: 15px;
-    }
-    .event-left a {
-        display: inline-block !important;
-        width: 100% !important;
-    }
-    .event-body {
-        display: inline-block !important;
-        width: 100% !important;
-    }
+
 }
 @media (min-width: 481px) and (max-width: 767px) {
-    .event-left {
-        padding-bottom: 15px;
+    .event-img {
+        display: block !important;
+        float: none !important;
+        margin-left: auto;
+        margin-right: auto;
     }
-    .event-left a {
+    .event-left {
         display: inline-block !important;
         width: 100% !important;
     }
     .event-body {
         display: inline-block !important;
+        hyphens: none !important;
+        padding-top: 20px;
+        text-align: center;
         width: 100% !important;
     }
 }
@@ -205,15 +201,21 @@ fieldset {
       float: left;
       clear: left;
     }
-    .event-left {
-        padding-bottom: 15px;
+    .event-img {
+        display: block !important;
+        float: none !important;
+        margin-left: auto;
+        margin-right: auto;
     }
-    .event-left a {
+    .event-left {
         display: inline-block !important;
         width: 100% !important;
     }
     .event-body {
         display: inline-block !important;
+        hyphens: none !important;
+        padding-top: 20px;
+        text-align: center;
         width: 100% !important;
     }
 }

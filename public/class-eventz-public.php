@@ -172,7 +172,7 @@ class Eventz_Lite_Public {
             $str_cat = str_replace('[CONTENT]', $event->category->name, $span);
         }
         if ($this->show_date and $this->show_category) {
-            $str_sep = ' / ' . str_replace('[CONTENT]', $event->category->name, $span);
+            $str_cat = ' / ' . str_replace('[CONTENT]', $event->category->name, $span);
         }
         if ($this->show_separator) {
             $str_sep = '<hr class="event-sep">';

@@ -121,7 +121,7 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 *   Display / Hide: Event Date.
 *   Display / Hide: Event Category.
 *   Select excerpt length for event description: 50 - 300 characters.
-* Styling adjustments for front end event display.
+* Front end styling adjustments for event display on mobile & tablet.
 * FAQ: extra instructions - displaying events for a particular venue (readme.txt & Shortcode Guide).
 
 = 1.0.2 =
