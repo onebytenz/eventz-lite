@@ -8,6 +8,8 @@
  * @author     Craig Sugden - onebyte.nz <info@onebyte.nz>
  */
 class Eventz_Lite_Public {
+    private $ssl = false;
+    private $protocol = 'http://';
     private $dir;
     private $dir_url;
     private $pagenum;
@@ -53,6 +55,10 @@ class Eventz_Lite_Public {
         $this->plugin_params = '';
         $this->pagenum = isset( $_GET['pageId'] ) ? absint( $_GET['pageId'] ) : 1;
         $this->plugin_search_query = isset($_GET['q']) ? $_GET['q'] : '';
+        if ($this->check_ssl()) {
+            $this->ssl = true;
+            $this->protocol = 'https://';
+        }
     }
     public function enqueue_styles() {
         wp_enqueue_style( $this->plugin_name . '-min', plugin_dir_url( __FILE__ ) . 'css/eventz.min.css', array(), $this->version, 'all' );
@@ -78,7 +84,7 @@ class Eventz_Lite_Public {
             $f = $this->pagenum * $this->plugin_results_pp - intval($this->plugin_results_pp);
             $offset = '&offset=' . $f;
         }
-        $url = 'http://' . $this->plugin_endpoint . '/v2/events.json?rows=' . $this->plugin_results_pp . $offset . 
+        $url = $this->protocol . $this->plugin_endpoint . '/v2/events.json?rows=' . $this->plugin_results_pp . $offset . 
             '&start_date=' . $datenow . $this->plugin_params .
                 '&fields=event:(id,name,category,location_summary,datetime_summary,description,url,images)';
         /*echo '<!--URL:' . $url . '-->';*/
@@ -87,6 +93,12 @@ class Eventz_Lite_Public {
         $result = $this->get_page_body($response);
         unset($eventz_http);
         return $result;
+    }
+    private function check_ssl() {	
+	if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {		
+            return true; 
+	}
+	return false;
     }
     private function get_page_body($response) {
         $htmlstr = '';
@@ -202,7 +214,25 @@ class Eventz_Lite_Public {
             $img = $transform->url;
             if (strpos($img, '-8.jpg') > 0 || strpos($img, '-8.png') > 0 || strpos($img, '-8.gif') > 0) {
                 if (strpos($img, 'http:') === false) {
-                    $img = str_replace('//cdn','http://cdn',$img);
+                    switch ($this->ssl) {
+                        case true:
+                            /* Funny urls' on SG server */
+                            $img = str_replace('//cdn','https://cdn', $img);
+                            break;
+                        case false:
+                            $img = str_replace('//cdn', 'http://cdn', $img);
+                            break;
+                    }
+                }
+                if (strpos($img, 'http:') !== false) {
+                    switch ($this->ssl) {
+                        case true:
+                            /* Funny urls' on SG server */
+                            $img = str_replace('http://','https://', $img);
+                            break;
+                        case false:
+                            break;
+                    }
                 }
                 return $img;
             }

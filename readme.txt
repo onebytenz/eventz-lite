@@ -115,6 +115,7 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 == Changelog ==
 
 = 1.1.0 =
+* SSL support added.
 * Split admin options into 4 tabs: General Setup, Display Options, Miscellaneous & Shortcode Guide.
 * Added configuration options for front end event display.
 *   Display / Hide: Event Location / Venue.
