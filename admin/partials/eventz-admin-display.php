@@ -11,31 +11,47 @@
     <h2><?php echo esc_html(get_admin_page_title());?></h2>
     <h2 id="tabs" class="nav-tab-wrapper">
       <a class="nav-tab nav-tab-active" href="#">General Setup</a>
+      <a class="nav-tab" href="#">Display Options</a>
+      <a class="nav-tab" href="#">Miscellaneous</a>
       <a class="nav-tab" href="#">Shortcode Guide</a>
     </h2>
-    <div id='sections'>    
+    <div id='sections'>
+        <form action="options.php" id="eventfindaOptions" method="post">
         <section>
-            <form action="options.php" id="eventfindaOptions" method="post">
                 <?php
                     settings_fields('eventz-lite');
                     do_settings_sections($this->plugin_name . '_general');
                 ?>
-                <table class="form-table">
-                    <tbody>
-                    <tr>
-                        <th scope="row"><label>Review &amp; Rate?</label></th>
-                        <td>If you like this plugin please <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/">review &amp; rate it.</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <?php
-                    submit_button();
-                ?>
                 <div id="login-success" title="Login Successful"></div>
                 <div id="login-fail" title="Login Failed"></div>
                 <div id="delete-confirm" title="Delete All Settings?"></div>
-            </form>
         </section>
+        <section>
+            <?php
+               settings_fields('eventz-lite');
+               do_settings_sections($this->plugin_name . '_display');
+               echo '<br/>';
+               submit_button('Update', 'primary',  'eventfindaOptions', false);
+           ?>
+        </section>
+        <section>
+            <?php
+               settings_fields('eventz-lite');
+               do_settings_sections($this->plugin_name . '_misc');
+            ?>
+            <table class="form-table">
+                <tbody>
+                <tr>
+                    <th scope="row"><label>Review &amp; Rate?</label></th>
+                    <td>If you like this plugin please <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/">review &amp; rate it.</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <?php
+               submit_button('Update', 'primary',  'eventfindaOptions', false);
+            ?>
+        </section>
+        </form>
         <section>
             <p><em><strong>How do I use the shortcode?</strong></em><br>
             Place the shortcode <strong>[eventz-lite]</strong> in any page or post.</p>
@@ -48,7 +64,13 @@
             The location slug is the last string in the url:</p>
             <p>http://www.eventfinda.co.nz/whatson/events/<a href="http://www.eventfinda.co.nz/whatson/events/auckland-central" target="_blank">auckland-central</a></p>
             <p>The location slug for the url above is “auckland-central”.<br>
-            <strong>[eventz-lite params=”location_slug=auckland-central”]</strong></p>
+            <strong>[eventz-lite params=”location_slug=auckland-central”]</strong><br><br>
+            The location slug can also be used for venues.<br>
+            Visit Eventfinda and search for your venue, example “Henderson RSA”.<br>
+            Events for this venue will be displayed with a link to the venue, for the above example the link is:<br>
+            https://www.eventfinda.co.nz/venue/henderson-rsa-auckland-west<br>
+            The location slug to enter for the above example is “henderson-rsa-auckland-west”.<br>
+            <strong>[eventz-lite params=”location_slug=henderson-rsa-auckland-west”]</strong></p>
             <p><strong>The Category Slug:</strong><br>
             To find the category slugs for your country visit your local Eventfinda site and click “Find Events” at the top of the page.<br>
             When the “Upcoming Events” page has loaded you will see the event categories listed underneath the locations.<br>

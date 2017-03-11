@@ -114,20 +114,21 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
-= 1.0.3 =
+= 1.1.0 =
+* Split admin options into 4 tabs: General Setup, Display Options, Miscellaneous & Shortcode Guide.
 * Added configuration options for front end event display.
-* Enable / disable: Event Location / Venue.
-* Enable / disable: Event Date.
-* Enable / disable: Event Category.
-* Select excerpt length: 50 - 300 characters.
+*   Display / Hide: Event Location / Venue.
+*   Display / Hide: Event Date.
+*   Display / Hide: Event Category.
+*   Select excerpt length for event description: 50 - 300 characters.
 * Styling adjustments for front end event display.
-* readme.txt - extra info for displaying events for a particular venue.
+* FAQ: extra instructions - displaying events for a particular venue (readme.txt & Shortcode Guide).
 
 = 1.0.2 =
 * Added code to admin class to increment version number after plugin update.
 
 = 1.0.1 =
-* Added dynamic links to request API username & password from Eventfinda based on country selection.
+* Added dynamic links to request API username & password from Eventfinda based on country / endpoint selection.
 * Logos changed for plugin site.
 
 = 1.0.0 =

@@ -117,67 +117,52 @@ class Eventz_Lite_Admin {
             '_general',
             array( 'label_for' => '_password' )
         );
+        add_settings_section(
+            '_display',
+            __('', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_general_cb' ),
+            $this->plugin_name . '_display'
+        );
         add_settings_field(
             '_display_options_header',
             __('Listing Display Options: <span class="dashicons dashicons-editor-help icenter" ' .
             'title="Select which items to show for each event listing."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_display_options_header_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_display',
+            '_display',
             array( 'label_for' => '_display_options_header' )
         );
         add_settings_field(
             '_display_options',
             __('', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_display_options_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_display',
+            '_display',
             array( 'label_for' => '_display_options' )
         );
         add_settings_field(
             '_excerpt',
             __('Excerpt Length: <span class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select how many characters to show fo rthe event description."></span>', 'eventz-lite' ),
+            'title="Select how many characters to show for each event description."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_excerpt_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_display',
+            '_display',
             array( 'label_for' => '_excerpt' )
         );
-        /*add_settings_field(
-            '_event_location',
-            __('Show Event Location / Venue: <span class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select to show the location or venue on the listing."></span>', 'eventz-lite' ),
-            array( $this, $this->plugin_name . '_event_location_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
-            array( 'label_for' => '_event_location' )
-        );
-        add_settings_field(
-            '_event_date',
-            __('Show Event Date: <span class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select to show the event start date on the listing."></span>', 'eventz-lite' ),
-            array( $this, $this->plugin_name . '_event_date_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
-            array( 'label_for' => '_event_date' )
-        );
-        add_settings_field(
-            '_event_category',
-            __('Show Event Category: <span class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select to show the event ccategory on the listing."></span>', 'eventz-lite' ),
-            array( $this, $this->plugin_name . '_event_category_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
-            array( 'label_for' => '_event_category' )
-        );*/
         add_settings_field(
             '_results_pp',
             __('Results Per Page: <span class="dashicons dashicons-editor-help icenter" title="' . 
             'Select how many listings to show per page."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_results_pp_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_display',
+            '_display',
             array( 'label_for' => '_results_pp' )
+        );
+        add_settings_section(
+            '_misc',
+            __('', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_general_cb' ),
+            $this->plugin_name . '_misc'
         );
         add_settings_field(
             '_eventfinda_branding',
@@ -186,8 +171,8 @@ class Eventz_Lite_Admin {
             'that you display a link to their site.&#013;You can choose to display the Eventfinda logo or a ' . 
             'plain text link."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_eventfinda_branding_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_misc',
+            '_misc',
             array( 'label_for' => '_eventfinda_branding' )
         );
         add_settings_field(
@@ -196,8 +181,8 @@ class Eventz_Lite_Admin {
             'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
             'or a plain text link."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_plugin_branding_cb' ),
-            $this->plugin_name . '_general',
-            '_general',
+            $this->plugin_name . '_misc',
+            '_misc',
             array( 'label_for' => '_plugin_branding' )
         );
         add_settings_field(
@@ -206,8 +191,8 @@ class Eventz_Lite_Admin {
             'title="Check this box to delete ' .
             ' the plugin settings on uninstall."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_delete_options_cb' ),
-           $this->plugin_name . '_general',
-            '_general',
+           $this->plugin_name . '_misc',
+            '_misc',
             array( 'label_for' => '_delete_options' )
         );
     }
