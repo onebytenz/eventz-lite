@@ -196,7 +196,7 @@ class Eventz_Lite_Admin {
             array( 'label_for' => '_delete_options' )
         );
     }
-    protected function eventz_lite_validate_options ($input) {
+    public function eventz_lite_validate_options ($input) {
         $default_values = array (
             '_version' => $this->version,
             '_endpoint' => 'api.eventfinda.co.nz',
