@@ -115,7 +115,7 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 == Changelog ==
 
 = 1.1.1 =
-Removed code preventing option updates.
+* Removed code preventing option updates.
 
 = 1.1.0 =
 * SSL support added.
