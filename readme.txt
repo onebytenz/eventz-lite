@@ -2,9 +2,9 @@
 Contributors: onebytenz
 Donate link: https://plugin.onebyte.nz/donate
 Tags: event, events, eventz, eventfinda, eventfinder, event finda, event finder, concerts, gig guide, exhibitions, festivals, lifestyle, performing arts, sports, outdoors, workshops, seminars, conferences, classes
-Requires at least: 4.6.1
+Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 4.6
+Stable tag: 4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -110,12 +110,18 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 1. Event listings - Auckland Gig Guide
 2. Admin - General Setup
-3. Edit Post - Auckland Gig Guide shortcode
+3. Admin - Display Options
+4. Admin - Miscellaneous Settings
 
 == Changelog ==
 
+= 1.1.2 =
+* Initial testing indicates the plugin functions from Wordpress 4.0 onwards.
+* Version tags updated accordingly.
+* Screenshots updated.
+
 = 1.1.1 =
-* Removed code preventing option updates.
+* Removed code preventing option updates (idiot of the week duly awarded :).
 
 = 1.1.0 =
 * SSL support added.
