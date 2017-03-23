@@ -29,12 +29,9 @@ class Eventz_Lite_HTTP {
         );
         $response = wp_safe_remote_get($url, $args);
         if (is_wp_error($response)){
-            $data = htmlentities($response->get_error_message());
+            $data = '<!--eventz-error-->' . htmlentities($response->get_error_message());
         } else {
             $data = wp_remote_retrieve_body($response);
-            if (strpos($data, '{"code":400') !== false || strpos($data, 'error code') !== false) {
-                $data = htmlentities($data);
-            }
         }
         return $data; 
     }

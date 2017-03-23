@@ -186,6 +186,27 @@ class Eventz_Lite_Admin {
             array( 'label_for' => '_plugin_branding' )
         );
         add_settings_field(
+            '_debug',
+            __('Enable Debugging: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Check this box to write errors to the Wordpress Debug Log. ' .
+            ' Set WP_DEBUG &amp; WP_DEBUG_LOG to true in wp-config.php. WP_DEBUG_DISPLAY ' .
+            ' can be set to false to hide PHP errors on the page."></span>', 'eventz' ),
+            array( $this, $this->plugin_name . '_debug_cb' ),
+            $this->plugin_name . '_misc',
+            '_misc',
+            array( 'label_for' => '_debug' )
+        );
+        add_settings_field(
+            '_debug_screen',
+            __('Onscreen Debugging: <span class="dashicons dashicons-editor-help icenter" ' .
+            'title="Check this box to add extended error messages to the . ' .
+            ' page display."></span>', 'eventz' ),
+            array( $this, $this->plugin_name . '_debug_screen_cb' ),
+            $this->plugin_name . '_misc',
+            '_misc',
+            array( 'label_for' => '_debug_screen' )
+        );
+        add_settings_field(
             '_delete_options',
             __('Delete Settings On Uninstall: <span class="dashicons dashicons-editor-help icenter" ' .
             'title="Check this box to delete ' .
@@ -208,6 +229,8 @@ class Eventz_Lite_Admin {
             '_event_excerpt' => '300',
             '_event_separator' => '1',
             '_results_pp' => '',
+            '_debug' => '0',
+            '_debug_screen' => '0',
             '_delete_options' => '0',
             '_eventfinda_logo' => '0',
             '_eventfinda_text' => '0',
@@ -372,6 +395,22 @@ class Eventz_Lite_Admin {
             }
         }
         echo '</select>' . "\r\n";
+    }
+    public function eventz_lite_debug_cb() {
+        $checked = '';
+        $debug = $this->options['_debug'];
+        if (intval($debug) === 1) {$checked = 'checked';}
+        echo '<input type="hidden" name="' . $this->option_name . '[_debug]" id="_debug" value="0">' . "\r\n" .
+            '<input type="checkbox" name="' . $this->option_name . '[_debug]" id="_debug" value="1" ' . 
+                $checked . '>' . "\r\n";
+    }
+    public function eventz_lite_debug_screen_cb() {
+        $checked = '';
+        $debug_screen = $this->options['_debug_screen'];
+        if (intval($debug_screen) === 1) {$checked = 'checked';}
+        echo '<input type="hidden" name="' . $this->option_name . '[_debug_screen]" id="_debug_screen" value="0">' . "\r\n" .
+            '<input type="checkbox" name="' . $this->option_name . '[_debug_screen]" id="_debug_screen" value="1" ' . 
+                $checked . '>' . "\r\n";
     }
     public function eventz_lite_delete_options_cb() {
         $checked = '';

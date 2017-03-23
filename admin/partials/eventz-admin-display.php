@@ -22,9 +22,7 @@
                     settings_fields('eventz-lite');
                     do_settings_sections($this->plugin_name . '_general');
                 ?>
-                <div id="login-success" title="Login Successful"></div>
-                <div id="login-fail" title="Login Failed"></div>
-                <div id="delete-confirm" title="Delete All Settings?"></div>
+                <div id="info"></div>
         </section>
         <section>
             <?php
@@ -99,6 +97,7 @@
         var checkrun = false;
         var verified = false;
         var ajaxSubmit = false;
+        var info_loading = '<span id="info_loading" class="spinner" style="visibility:visible;float:none;"></span>';
         var validator = jQuery("#eventfindaOptions").validate({
             errorElement: "span",
             submitHandler: function() {
@@ -110,7 +109,7 @@
                 } else {
                     jQuery("#eventfindaOptions").ajaxSubmit({
                         success: function(){
-                            jQuery('#login-success').html('');
+                            jQuery('#info').html('');
                         }, 
                         timeout: 5000
                     });
@@ -236,13 +235,22 @@
                 'password': _password,
                 'endpoint': _endpoint
             };
+            jQuery('#info').attr('title', 'API Login');
+            jQuery('#info').html('<p style="text-align:center;">Logging in to Eventfinda<br/>Please Wait...<br/>' + info_loading + '</p>');
+            jQuery("#info").dialog({
+                resizable: false,
+                height:150,
+                modal: true
+            });
             /*since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php*/
             jQuery.post(ajaxurl, data, function(response) {
                 if (response !== 'true') {
                     checkrun = false;
                     verified = false;
-                    jQuery('#login-fail').html('<p class="error" style="text-align:center;">' + response + '</p>');
-                    jQuery("#login-fail").dialog({
+                    jQuery('#info').hide();
+                    jQuery('#info').attr('title', 'An Error Occurred');
+                    jQuery('#info').html('<p class="error" style="text-align:center;">' + response + '</p>');
+                    jQuery("#info").dialog({
                         resizable: false,
                         height:195,
                         modal: true
@@ -252,12 +260,8 @@
                     if (verified && !checkrun) {
                         checkrun = true;
                         ajaxSubmit = true;
-                        jQuery('#login-success').html('<p class="success">Eventfinda API Login Successful.<br/>Saving...</p>');
-                        jQuery("#login-success").dialog({
-                            resizable: false,
-                            height:125,
-                            modal: true
-                        });
+                        jQuery('#info').attr('title', 'Success');
+                        jQuery('#info').html('<p class="success">Eventfinda API Login Successful.<br/>Saving...<br/>' + info_loading + '</p>');
                         jQuery('#eventfindaOptions').submit();
                     }
                 }

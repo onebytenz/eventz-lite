@@ -32,6 +32,8 @@ class Eventz_Lite_Public {
     private $plugin_endpoint;
     private $plugin_params;
     private $plugin_results_pp;
+    private $debug;
+    private $debug_screen;
     
     public function __construct($plugin_name, $version) {
         $this->dir = dirname(__FILE__);
@@ -51,6 +53,8 @@ class Eventz_Lite_Public {
         $this->show_plugin_logo = intval($this->options['_show_plugin_logo']);
         $this->show_plugin_link = intval($this->options['_show_plugin_link']);
         $this->plugin_results_pp = intval($this->options['_results_pp']);
+        $this->debug = intval($this->options['_debug']);
+        $this->debug_screen = intval($this->options['_debug_screen']);
         unset($this->options);
         $this->plugin_params = '';
         $this->pagenum = isset( $_GET['pageId'] ) ? absint( $_GET['pageId'] ) : 1;
@@ -106,20 +110,42 @@ class Eventz_Lite_Public {
         $plugin_dir = $this->dir_url;
         $script = '<script>var notfound="' . $plugin_dir . 'img/notfound.png";</script>';
         $event_footer = $this->get_page_footer();
-        $collection = json_decode($response);
-        $count = intval($collection->{'@attributes'}->count);
-        if ($count === 0) {
-            $result_str = 'No events found.';
-            $page_links_html = '';
-            return '<div class="events">' . $result_str . '</div>' . $event_footer;
+        if (strpos($response, 'eventz-error') !== false) {
+            /* wp_remote_get error */
+            $msg = str_replace('<!--eventz-error-->', 'HTTP Error: ', $response);
+            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $result = $e->msg;
+            unset ($e);
+        } elseif (strpos($response, 'xml') !== false) {
+            /* Eventfinda login error */
+            $sxml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS);
+            $msg = 'Eventfinda API Error: ' . $sxml;
+            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $result = $e->msg;
+            unset ($e);
+        } elseif (strpos($response, 'code') !== false && strpos($response, 'message') !== false) {
+            /* Eventfinda API query error */
+            $collection = json_decode($response);
+            $msg = 'Eventfinda API Error: ' . $collection->message;
+            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $result = $e->msg;
+            unset ($e);
         } else {
-            $page_links_html = $this->get_page_links($count);
-            foreach ($collection->events as $event) {
-                $htmlstr .= $this->get_event_html($event);
+            $collection = json_decode($response);
+            $count = intval($collection->{'@attributes'}->count);
+            if ($count === 0) {
+                $result_str = 'No events found.';
+                $page_links_html = '';
+                return '<div class="events">' . $result_str . '</div>' . $event_footer;
+            } else {
+                $page_links_html = $this->get_page_links($count);
+                foreach ($collection->events as $event) {
+                    $htmlstr .= $this->get_event_html($event);
+                }
             }
+            $result = $script . '<div id="events" class="events">' . $result_str . 
+                $htmlstr . $page_links_html . '</div>' . $event_footer;
         }
-        $result = $script . '<div id="events" class="events">' . $result_str . 
-            $htmlstr . $page_links_html . '</div>' . $event_footer;
         return $result;
     }
     private function get_page_links ($count) {
@@ -155,7 +181,7 @@ class Eventz_Lite_Public {
         $template->set('PLUGIN', $plugin_branding);
         return $template->output();
     }
-    private function get_event_html ($event) {
+    public function get_event_html ($event) {
         $id = $event->id;
         $name = $event->name;
         $str_loc = '';

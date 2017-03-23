@@ -37,9 +37,9 @@ This section describes how to install the plugin and get it working.
 1. Upload the plugin files to the `/wp-content/plugins/eventz-lite` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Visit http://www.eventfinda.co.nz/api/v2/index to request a user name & Eventfinda API key.
-3. Use the Settings->Eventz Lite screen to configure the plugin.
-4. Enter your Eventfinda API username & password in the General Setup section.
-5. You must add this shortcode [eventz-lite] in a page or post.
+4. Use the Settings->Eventz Lite screen to configure the plugin.
+5. Enter your Eventfinda API username & password in the General Setup section.
+6. You must add this shortcode [eventz-lite] in a page or post.
 
 == Frequently Asked Questions ==
 
@@ -115,10 +115,18 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.2.0 =
+* Added debugging options in plugin admin.
+* Log to Wordpress debug.log - Requires WP_DEBUG & WP_DEBUG_LOG set to true in wp-config.php
+* Added user friendly error messages for public facing screens.
+*  Generic apology / error message.
+*  Add specific error to generic message - Set WP_DEBUG_DISPLAY to false in wp-config.php
+
 = 1.1.2 =
 * Initial testing indicates the plugin functions from Wordpress 4.0 onwards.
 * Version tags updated accordingly.
 * Screenshots updated.
+* Minor changes to admin API Login.
 
 = 1.1.1 =
 * Removed code preventing option updates (idiot of the week duly awarded :).

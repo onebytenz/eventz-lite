@@ -49,7 +49,7 @@ class Eventz_Lite {
      */
     public function __construct() {
         $this->plugin_name = 'eventz_lite';
-        $this->version = '1.1.1';
+        $this->version = '1.2.0';
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
@@ -94,6 +94,10 @@ class Eventz_Lite {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-eventz-templates.php';
         /**
          * The class responsible for defining all actions that occur in the admin area.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-eventz-debug.php';
+        /**
+         * The class responsible for debugging.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-eventz-admin.php';
         /**
