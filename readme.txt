@@ -115,6 +115,10 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.2.1 =
+* Fixed problems with database not updating correctly after plugin update.
+* Minor updates to admin jQuery script.
+
 = 1.2.0 =
 * Added debugging options in plugin admin.
 * Log to Wordpress debug.log - Requires WP_DEBUG & WP_DEBUG_LOG set to true in wp-config.php

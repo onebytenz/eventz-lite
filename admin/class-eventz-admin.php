@@ -91,7 +91,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_endpoint',
-            __('Eventfinda API Endpoint: <span class="dashicons dashicons-editor-help icenter"' . 
+            __('Eventfinda API Endpoint: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter"' . 
             'title="The Eventfinda server you would like to get the event listings from."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_endpoint_cb' ),
             $this->plugin_name . '_general',
@@ -100,7 +100,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_username',
-            __('Eventfinda API User Name: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Eventfinda API User Name: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Your Eventfinda API username.&#013;You can request this from the Eventfinda ' .
             'API page"></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_username_cb' ),
@@ -110,7 +110,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_password',
-            __('Eventfinda API Password: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Eventfinda API Password: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Your Eventfinda API password."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_password_cb' ),
             $this->plugin_name . '_general',
@@ -125,7 +125,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_display_options_header',
-            __('Listing Display Options: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Listing Display Options: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Select which items to show for each event listing."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_display_options_header_cb' ),
             $this->plugin_name . '_display',
@@ -142,7 +142,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_excerpt',
-            __('Excerpt Length: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Excerpt Length: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Select how many characters to show for each event description."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_excerpt_cb' ),
             $this->plugin_name . '_display',
@@ -151,7 +151,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_results_pp',
-            __('Results Per Page: <span class="dashicons dashicons-editor-help icenter" title="' . 
+            __('Results Per Page: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="' . 
             'Select how many listings to show per page."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_results_pp_cb' ),
             $this->plugin_name . '_display',
@@ -166,7 +166,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_eventfinda_branding',
-            __('Eventfinda Branding: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Eventfinda Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Eventfinda API terms require ' .
             'that you display a link to their site.&#013;You can choose to display the Eventfinda logo or a ' . 
             'plain text link."></span>', 'eventz-lite' ),
@@ -177,7 +177,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_plugin_branding',
-            __('Plugin Branding: <span class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
+            __('Plugin Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
             'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
             'or a plain text link."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_plugin_branding_cb' ),
@@ -187,7 +187,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_debug',
-            __('Enable Debugging: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Enable Debugging: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Check this box to write errors to the Wordpress Debug Log. ' .
             ' Set WP_DEBUG &amp; WP_DEBUG_LOG to true in wp-config.php. WP_DEBUG_DISPLAY ' .
             ' can be set to false to hide PHP errors on the page."></span>', 'eventz' ),
@@ -198,9 +198,9 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_debug_screen',
-            __('Onscreen Debugging: <span class="dashicons dashicons-editor-help icenter" ' .
-            'title="Check this box to add extended error messages to the . ' .
-            ' page display."></span>', 'eventz' ),
+            __('Onscreen Debugging: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="Check this box to add extended error messages to the public facing pages on the site.' .
+            '"></span>', 'eventz' ),
             array( $this, $this->plugin_name . '_debug_screen_cb' ),
             $this->plugin_name . '_misc',
             '_misc',
@@ -208,7 +208,7 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_delete_options',
-            __('Delete Settings On Uninstall: <span class="dashicons dashicons-editor-help icenter" ' .
+            __('Delete Settings On Uninstall: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Check this box to delete ' .
             ' the plugin settings on uninstall."></span>', 'eventz-lite' ),
             array( $this, $this->plugin_name . '_delete_options_cb' ),

@@ -49,7 +49,7 @@ class Eventz_Lite {
      */
     public function __construct() {
         $this->plugin_name = 'eventz_lite';
-        $this->version = '1.2.0';
+        $this->version = '1.2.1';
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
