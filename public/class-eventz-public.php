@@ -133,18 +133,24 @@ class Eventz_Lite_Public {
         } else {
             $collection = json_decode($response);
             $count = intval($collection->{'@attributes'}->count);
+            if ($this->show_separator) {
+                $htmlstr .= '<ul class="eventz-ul-b">';
+            } else {
+                 $htmlstr .= '<ul class="eventz-ul">';
+            }
             if ($count === 0) {
-                $result_str = 'No events found.';
+                $result_str = '<li>No events found.</li>';
                 $page_links_html = '';
-                return '<div class="events">' . $result_str . '</div>' . $event_footer;
+                //return '<div class="events">' . $result_str . '</div>' . $event_footer;
+                return $result_str . $event_footer;
             } else {
                 $page_links_html = $this->get_page_links($count);
                 foreach ($collection->events as $event) {
                     $htmlstr .= $this->get_event_html($event);
                 }
             }
-            $result = $script . '<div id="events" class="events">' . $result_str . 
-                $htmlstr . $page_links_html . '</div>' . $event_footer;
+            $result = $script . $result_str .
+                $htmlstr . $page_links_html . $event_footer . '</ul>';
         }
         return $result;
     }
@@ -161,8 +167,7 @@ class Eventz_Lite_Public {
                 'prev_text' => __( '&laquo; Prev', 'Previous' ),
                 'next_text' => __( 'Next &raquo;', 'Next' ),
                 'total'     => $num_of_pages,
-                'current'   => $this->pagenum,
-                'add_fragment' => '#events'
+                'current'   => $this->pagenum
             ));
             $template_file = '/partials/page-links.tpl';
             $template = new Eventz_Lite_Template($this->dir . $template_file);
@@ -188,32 +193,33 @@ class Eventz_Lite_Public {
         $str_dat = '';
         $str_cat = '';
         $str_sep = '';
-        $span = '<span class="smaller">[CONTENT]</span>';
+        $span = '[CONTENT]';
         $location_summary = $event->location_summary;
         $datetime_summary = $event->datetime_summary;
-        $description = $event->description;
-        $str_des = $description;
-        $l = strlen($description);
-        if ($l > $this->excerpt_length) {
-            $pos = strpos($description, ' ', $this->excerpt_length);
-            $str_des = substr($description, 0, $pos) . '...'; 
+        $desc = $event->description;
+        $excerpt = $this->excerpt_length;
+        $l = strlen($desc);
+        if ($l > $excerpt) {
+            $str = substr($desc, 0, $excerpt);
+            $pos = strripos($str, ' ');
+            $str_des = substr($desc, 0, $pos);
+            $str_des = rtrim($str_des); 
+        } else {
+            $str_des = str_replace('...', '', $desc);
         }
         if ($this->show_location) {
-            $str_loc = '<br/>' . str_replace('[CONTENT]', 
+            $str_loc = str_replace('[CONTENT]', 
                 str_replace('Great Barrier Island, Great Barrier Island,',
                         'Great Barrier Island,',$location_summary), $span);
         }
         if ($this->show_date) {
-            $str_dat = '<br/>' . str_replace('[CONTENT]', $datetime_summary, $span);
+            $str_dat = str_replace('[CONTENT]', $datetime_summary, $span);
         }
         if ($this->show_category) {
             $str_cat = str_replace('[CONTENT]', $event->category->name, $span);
         }
         if ($this->show_date and $this->show_category) {
             $str_cat = ' / ' . str_replace('[CONTENT]', $event->category->name, $span);
-        }
-        if ($this->show_separator) {
-            $str_sep = '<hr class="event-sep">';
         }
         $url = $event->url;
         $template_file = '/partials/events-list.tpl';
@@ -232,6 +238,10 @@ class Eventz_Lite_Public {
             }			
         }
         $result = $template->output();
+        if ($this->show_separator) {
+            $tmpstr = str_replace('class="eventz-li"', 'class="eventz-li-b"', $result);
+            $result = $tmpstr;
+        }
         unset ($template);
         return $result;
     }

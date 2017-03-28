@@ -1,10 +1,10 @@
-#tooltip {
+#eventztip {
     position:absolute;
     z-index:9999;
     opacity: .0;
     filter: alpha(opacity=00);
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";
-    width : 200px;
+    width : 220px;
     background-color: #fff;
     border: 1px solid #cccccc;
     padding: 20px;

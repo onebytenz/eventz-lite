@@ -115,6 +115,13 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.3.0 =
+* Redesigned front end template HTML & CSS.
+* Reduced event description length to 220 characters as per the API.
+* Functions adjusted to reflect above.
+* Increment description length by 10's to allow fine tuning of front end display.
+* Adjusted admin jQuery to keep tooltip on screen.
+
 = 1.2.1 =
 * Fixed problems with database not updating correctly after plugin update.
 * Minor updates to admin jQuery script.

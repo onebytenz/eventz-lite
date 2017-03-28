@@ -115,32 +115,76 @@
             }
         });
         $(function() {
-            var offsetX = 25;
-            var offsetY = -35;
-            var TooltipOpacity = 0.9;
             $('[title]').mouseenter(function(e) {
-            var id = $(this).attr('id');
-            var Tooltip = $(this).attr('title');
-            if(Tooltip !== '' && id === 'eventz-icon') {
-                $(this).attr('customTooltip',Tooltip);
-                $(this).attr('title','');
-            }
-            var customTooltip = $(this).attr('customTooltip');
-            if(customTooltip !== '' && id === 'eventz-icon') {
-                $("body").append('<div id="tooltip">' + customTooltip + '</div>');
-                $('#tooltip').css('left', e.pageX + offsetX );
-                $('#tooltip').css('top', e.pageY + offsetY );
-                $('#tooltip').fadeIn('500');
-                $('#tooltip').fadeTo('10',TooltipOpacity);
-            }
-            }).mousemove(function(e) {
-                var X = e.pageX;
-                var Y = e.pageY;
-                $('#tooltip').css('left', X + offsetX );
-                $('#tooltip').css('top', Y + offsetY );
-            }).mouseleave(function() {
-                $("body").children('div#tooltip').remove();
-            });
+                var TooltipOpacity = 0.9;
+                var id = $(this).attr('id');
+                var Tooltip = $(this).attr('title');
+                if(Tooltip !== '' && id === 'eventz-icon') {
+                    $(this).attr('customTooltip',Tooltip);
+                    $(this).attr('title','');
+                }
+                var customTooltip = $(this).attr('customTooltip');
+                if(customTooltip !== '' && id === 'eventz-icon') {
+                    var X = e.pageX;
+                    var Y = e.pageY;
+                    var offsetX = 25;
+                    var offsetY = -35;
+                    var tipToBottom, tipToRight;
+                    $("body").append('<div id="eventztip">' + customTooltip + '</div>');
+                    var outerWidth = $('#eventztip').outerWidth();
+                    var outerHeight = $('#eventztip').outerHeight();
+                    // Distance to the right
+                    tipToRight = $(window).width() - (X + offsetX + outerWidth + 15);
+                    // Tooltip too close to the right?
+                    if(tipToRight < offsetX) {
+                        X += tipToRight + offsetX;
+                        Y -= outerHeight - 25;
+                    } else {
+                        X += offsetX;
+                    // Distance to the bottom
+                    }
+                    tipToBottom = $(window).height() - (Y + offsetY + outerHeight + 5);
+                    // Tooltip too close to the bottom?
+                    if(tipToBottom < offsetY) {
+                        Y += tipToBottom;
+                    } else {
+                        Y += offsetY;
+                    }
+                    $('#eventztip').css('left', X);
+                    $('#eventztip').css('top', Y);
+                    $('#eventztip').fadeIn('1000');
+                    $('#eventztip').fadeTo('10',TooltipOpacity);
+                }
+                }).mousemove(function(e) {
+                    var X = e.pageX;
+                    var Y = e.pageY;
+                    var offsetX = 25;
+                    var offsetY = -35;
+                    var tipToBottom, tipToRight;
+                    var outerWidth = $('#eventztip').outerWidth();
+                    var outerHeight = $('#eventztip').outerHeight();
+                    // Distance to the right
+                    tipToRight = $(window).width() - (X + offsetX + outerWidth + 15);
+                    // Tooltip too close to the right?
+                    if(tipToRight < offsetX) {
+                        X += tipToRight + offsetX;
+                        Y -= outerHeight - 25;
+                    } else {
+                        X += offsetX;
+                    }
+                    $('#eventztip').css('left', X);
+                    // Distance to the bottom
+                    tipToBottom = $(window).height() - (Y + offsetY + outerHeight + 5);
+                    // Tooltip too close to the bottom?
+                    if(tipToBottom < offsetY) {
+                        Y += tipToBottom + offsetY;
+                    } else {
+                        Y += offsetY;
+                    }
+                    $('#eventztip').css('top', Y);
+                }).mouseleave(function() {
+                    $("body").children('div#eventztip').remove();
+                });
         });
         $(document).on( 'click', '.nav-tab-wrapper a', function() {
 		$('section').hide();
@@ -178,8 +222,9 @@
                     'Checking this box will delete all of the plugins settings from the database ' +
                     'if the plugin is uninstalled. This action cannot be undone.' +
                     '</p>';
-                $("#delete-confirm").html(str);
-                $("#delete-confirm").dialog({
+                $('#info').attr('title', 'Delete Database Settings?');
+                $("#info").html(str);
+                $("#info").dialog({
                     resizable: false,
                     height:225,
                     modal: true,
@@ -233,7 +278,7 @@
             $('#info').html('<p style="text-align:center;">Logging in to Eventfinda<br/>Please Wait...<br/>' + info_loading + '</p>');
             $("#info").dialog({
                 resizable: false,
-                height:150,
+                height:170,
                 modal: true
             });
             /*since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php*/
@@ -246,7 +291,7 @@
                     $('#info').html('<p class="error" style="text-align:center;">' + response + '</p>');
                     $("#info").dialog({
                         resizable: false,
-                        height:195,
+                        height:205,
                         modal: true
                     });
                 } else {
@@ -261,5 +306,5 @@
                 }
             });
         };
-}(jQuery));
+    }(jQuery));
 </script>

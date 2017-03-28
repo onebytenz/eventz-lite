@@ -165,27 +165,6 @@ class Eventz_Lite_Admin {
             $this->plugin_name . '_misc'
         );
         add_settings_field(
-            '_eventfinda_branding',
-            __('Eventfinda Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Eventfinda API terms require ' .
-            'that you display a link to their site.&#013;You can choose to display the Eventfinda logo or a ' . 
-            'plain text link."></span>', 'eventz-lite' ),
-            array( $this, $this->plugin_name . '_eventfinda_branding_cb' ),
-            $this->plugin_name . '_misc',
-            '_misc',
-            array( 'label_for' => '_eventfinda_branding' )
-        );
-        add_settings_field(
-            '_plugin_branding',
-            __('Plugin Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
-            'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
-            'or a plain text link."></span>', 'eventz-lite' ),
-            array( $this, $this->plugin_name . '_plugin_branding_cb' ),
-            $this->plugin_name . '_misc',
-            '_misc',
-            array( 'label_for' => '_plugin_branding' )
-        );
-        add_settings_field(
             '_debug',
             __('Enable Debugging: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
             'title="Check this box to write errors to the Wordpress Debug Log. ' .
@@ -216,6 +195,27 @@ class Eventz_Lite_Admin {
             '_misc',
             array( 'label_for' => '_delete_options' )
         );
+        add_settings_field(
+            '_eventfinda_branding',
+            __('Eventfinda Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="Eventfinda API terms require ' .
+            'that you display a link to their site.&#013;You can choose to display the Eventfinda logo or a ' . 
+            'plain text link."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_eventfinda_branding_cb' ),
+            $this->plugin_name . '_misc',
+            '_misc',
+            array( 'label_for' => '_eventfinda_branding' )
+        );
+        add_settings_field(
+            '_plugin_branding',
+            __('Plugin Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
+            'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
+            'or a plain text link."></span>', 'eventz-lite' ),
+            array( $this, $this->plugin_name . '_plugin_branding_cb' ),
+            $this->plugin_name . '_misc',
+            '_misc',
+            array( 'label_for' => '_plugin_branding' )
+        );
     }
     public function eventz_lite_validate_options ($input) {
         $default_values = array (
@@ -226,7 +226,7 @@ class Eventz_Lite_Admin {
             '_event_location' => '1',
             '_event_date' => '1',
             '_event_category' => '1',
-            '_event_excerpt' => '300',
+            '_event_excerpt' => '220',
             '_event_separator' => '1',
             '_results_pp' => '',
             '_debug' => '0',
@@ -356,12 +356,9 @@ class Eventz_Lite_Admin {
     public function eventz_lite_excerpt_cb() {
         $str_options = '';
         $array = array(
-            1=>"50",
-            2=>"100",
-            3=>"150",
-            4=>"200",
-            5=>"250",
-            6=>"300"
+            1=>"10",2=>"20",3=>"30",4=>"40",5=>"50",6=>"60",7=>"70",8=>"80",9=>"90",10=>"100",
+            11=>"110",12=>"120",13=>"130",14=>"140",15=>"150",16=>"160",17=>"170",18=>"180",
+            19=>"190",20=>"200",21=>"210",22=>"220"
         );
         $excerpt_length = intval($this->options['_event_excerpt']);
         foreach($array as $key => $value) {

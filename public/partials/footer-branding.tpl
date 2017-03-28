@@ -1,1 +1,1 @@
-<div class="events"><ul class="event-list"><li class="event-footer">[EVENTFINDA][PLUGIN]</li></ul></div>
+<li class="eventz-li-f">[EVENTFINDA][PLUGIN]</li>
