@@ -1,1 +1,1 @@
-<small><a href="http://[LINK]" title="Powered by Eventfinda" target="_blank">Powered by Eventfinda</a></small>
+<small><a href="http://[LINK]" title="[POWERED_BY]" target="_blank">[POWERED_BY]</a></small>

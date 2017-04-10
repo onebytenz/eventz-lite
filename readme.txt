@@ -115,6 +115,19 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 
 == Changelog ==
 
+= 1.3.4 =
+* Added translation template to languages folder.
+* Code adjusted accordingly - plugin now translation ready.
+
+= 1.3.3 =
+* Padded out event description text away from the featured image.
+
+= 1.3.2 =
+* Fixed missing link on event images.
+
+= 1.3.1 =
+* Minor update to front end css file.
+
 = 1.3.0 =
 * Redesigned front end template HTML & CSS.
 * Reduced event description length to 220 characters as per the API.

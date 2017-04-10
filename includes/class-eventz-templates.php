@@ -21,7 +21,17 @@ class Eventz_Lite_Template {
         if (!file_exists($this->file)) {
             return "Error loading template file ($this->file).";
         }
-        $output = file_get_contents($this->file);
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once (ABSPATH . '/wp-admin/includes/file.php');
+            WP_Filesystem();
+        }
+        $access_type = get_filesystem_method();
+        if($access_type !== 'direct') {
+            $output = file_get_contents($this->file);
+        } else {
+            $output = $wp_filesystem->get_contents($this->file);
+        }
         foreach ($this->values as $key => $value) {
             $tagToReplace = "[$key]";
             $output = str_replace($tagToReplace, $value, $output);

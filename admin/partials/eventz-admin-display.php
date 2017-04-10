@@ -10,10 +10,10 @@
 <div class="wrap">
     <h2><?php echo esc_html(get_admin_page_title());?></h2>
     <h2 id="tabs" class="nav-tab-wrapper">
-      <a class="nav-tab nav-tab-active" href="#">General Setup</a>
-      <a class="nav-tab" href="#">Display Options</a>
-      <a class="nav-tab" href="#">Miscellaneous</a>
-      <a class="nav-tab" href="#">Shortcode Guide</a>
+      <a class="nav-tab nav-tab-active" href="#"><?php _e('General Setup', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Display Options', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Miscellaneous', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Shortcode Guide', 'eventz-lite') ?></a>
     </h2>
     <div id='sections'>
         <form action="options.php" id="eventfindaOptions" method="post">
@@ -29,7 +29,7 @@
                settings_fields('eventz-lite');
                do_settings_sections($this->plugin_name . '_display');
                echo '<br/>';
-               submit_button('Update', 'primary',  'eventfindaOptions', false);
+               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
            ?>
         </section>
         <section>
@@ -40,49 +40,49 @@
             <table class="form-table">
                 <tbody>
                 <tr>
-                    <th scope="row"><label>Review &amp; Rate?</label></th>
-                    <td>If you like this plugin please <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/">review &amp; rate it.</a></td>
+                    <th scope="row"><label><?php _e('Review and Rate?', 'eventz-lite') ?></label></th>
+                    <td><?php _e('If you like this plugin please', 'eventz-lite') ?> <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/"><?php _e('review and rate it', 'eventz-lite') ?>.</a></td>
                 </tr>
                 </tbody>
             </table>
             <?php
-               submit_button('Update', 'primary',  'eventfindaOptions', false);
+               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
             ?>
         </section>
         </form>
         <section>
-            <p><em><strong>How do I use the shortcode?</strong></em><br>
-            Place the shortcode <strong>[eventz-lite]</strong> in any page or post.</p>
-            <p><em><strong>How do I refine the result sets?</strong></em><br>
-            Visit <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda</a> and navigate to the “Parameters” section to see the available query parameters that can be used to retrieve the result sets.</p>
-            <p><em><strong>I have events listed with Eventfinda, how do I display just those listings?</strong></em><br>
-            <strong>[eventz-lite params=”username=myeventfindausername”]</strong></p>
-            <p><strong>The Location Slug:</strong><br>
-            To find your location slug just visit <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda </a>and navigate to the location you would like to display listings for.<br>
-            The location slug is the last string in the url:</p>
+            <p><em><strong><?php _e('How do I use the shortcode?', 'eventz-lite') ?></strong></em><br>
+            <?php _e('Place the shortcode', 'eventz-lite') ?> <strong>[eventz-lite]</strong> <?php _e('in any page or post', 'eventz-lite') ?>.</p>
+            <p><em><strong><?php _e('How do I refine the result sets?', 'eventz-lite') ?></strong></em><br>
+            <?php _e('Visit', 'eventz-lite') ?> <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda</a> <?php _e('and navigate to the “Parameters” section to see the available query parameters that can be used to retrieve the result sets', 'eventz-lite') ?>.</p>
+            <p><em><strong><?php _e('I have events listed with Eventfinda, how do I display just those listings?', 'eventz-lite') ?></strong></em><br>
+            <strong>[eventz-lite params=”username=<?php _e('my-eventfinda-username', 'eventz-lite') ?>”]</strong></p>
+            <p><strong><?php _e('The Location Slug', 'eventz-lite') ?>:</strong><br>
+            <?php _e('To find your location slug just visit', 'eventz-lite') ?> <a href="http://www.eventfinda.co.nz/" target="_blank">Eventfinda </a> <?php _e('and navigate to the location you would like to display listings for', 'eventz-lite') ?>.<br>
+            <?php _e('The location slug is the last string in the url', 'eventz-lite') ?>:</p>
             <p>http://www.eventfinda.co.nz/whatson/events/<a href="http://www.eventfinda.co.nz/whatson/events/auckland-central" target="_blank">auckland-central</a></p>
-            <p>The location slug for the url above is “auckland-central”.<br>
+            <p><?php _e('The location slug for the url above is', 'eventz-lite') ?> “auckland-central”.<br>
             <strong>[eventz-lite params=”location_slug=auckland-central”]</strong><br><br>
-            The location slug can also be used for venues.<br>
-            Visit Eventfinda and search for your venue, example “Henderson RSA”.<br>
-            Events for this venue will be displayed with a link to the venue, for the above example the link is:<br>
+            <?php _e('The location slug can also be used for venues', 'eventz-lite') ?>.<br>
+            <?php _e('Visit Eventfinda and search for your venue, example:', 'eventz-lite') ?> Henderson RSA.<br>
+            <?php _e('Events for this venue will be displayed with a link to the venue, for the above example the link is', 'eventz-lite') ?>:<br>
             https://www.eventfinda.co.nz/venue/henderson-rsa-auckland-west<br>
-            The location slug to enter for the above example is “henderson-rsa-auckland-west”.<br>
+            <?php _e('The location slug to enter for the above example is', 'eventz-lite') ?> henderson-rsa-auckland-west.<br>
             <strong>[eventz-lite params=”location_slug=henderson-rsa-auckland-west”]</strong></p>
-            <p><strong>The Category Slug:</strong><br>
-            To find the category slugs for your country visit your local Eventfinda site and click “Find Events” at the top of the page.<br>
-            When the “Upcoming Events” page has loaded you will see the event categories listed underneath the locations.<br>
-            Click the category you would like to display and get the category slug from the url:</p>
+            <p><strong><?php _e('The Category Slug', 'eventz-lite') ?>:</strong><br>
+            <?php _e('To find the category slugs for your country visit your local Eventfinda site and click Find Events at the top of the page', 'eventz-lite') ?>.<br>
+            <?php _e('When the Upcoming Events page has loaded you will see the event categories listed underneath the locations', 'eventz-lite') ?>.<br>
+            <?php _e('Click the category you would like to display and get the category slug from the url', 'eventz-lite') ?>:</p>
             <p>http://www.eventfinda.co.nz/<a href="http://www.eventfinda.co.nz/concerts-gig-guide/events/new-zealand" target="_blank">concerts-gig-guide</a>/events/new-zealand</p>
-            <p>The category slug for the url above is “concerts-gig-guide”.<br>
+            <p><?php _e('The category slug for the url above is', 'eventz-lite') ?> concerts-gig-guide.<br>
             <strong>[eventz-lite params=”category_slug=concerts-gig-guide”]</strong></p>
-            <p><strong>Example Shortcodes:</strong></p>
-            <p>Auckland Events:<strong><br>
+            <p><strong><?php _e('Example Shortcodes', 'eventz-lite') ?>:</strong></p>
+            <p><?php _e('Auckland Events', 'eventz-lite') ?>:<strong><br>
             [eventz-lite params=”location_slug=auckland”]</strong><br>
-            Auckland Gig Guide:<strong><br>
+            <?php _e('Auckland Gig Guide', 'eventz-lite') ?>:<strong><br>
             [eventz-lite params=”location_slug=auckland&amp;category_slug=concerts-gig-guide”]</strong></p>
-            <p>The paramaters for “rows” &amp; “offset” are taken care of by the plugin (results per page in the admin setup).</p>
-            <p>More information on querying the <a href="http://www.eventfinda.co.nz/api/v2/events" target="_blank">Eventfinda API</a><br>
+            <p><?php _e('The paramaters for rows and offset are taken care of by the plugin (results per page in the admin setup)', 'eventz-lite') ?>.</p>
+            <p><?php _e('More information on querying the', 'eventz-lite') ?> <a href="http://www.eventfinda.co.nz/api/v2/events" target="_blank">Eventfinda API</a><br>
             <a href="https://plugin.onebyte.nz/eventz-lite/docs/" target="_blank">https://plugin.onebyte.nz/eventz-lite/docs/</a></p>
         </section>
     </div>

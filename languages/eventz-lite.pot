@@ -1,0 +1,268 @@
+
+msgid "More Info at Eventfinda"
+msgstr ""
+
+msgid "Read More"
+msgstr ""
+
+msgid "Powered by Eventfinda"
+msgstr ""
+
+msgid "Get the Plugin"
+msgstr ""
+
+msgid "Austria"
+msgstr ""
+
+msgid ""
+msgstr "Australia"
+
+msgid "New Zealand"
+msgstr ""
+
+msgid "Singapore"
+msgstr ""
+
+msgid "HTTP Error:"
+msgstr ""
+
+msgid "No events found matching the criteria provided."
+msgstr ""
+
+msgid "Eventfinda API Error:"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Go Pro"
+msgstr ""
+
+msgid "Eventfinda API Endpoint"
+msgstr ""
+
+msgid "The Eventfinda server you would like to get the event listings from."
+msgstr ""
+
+msgid "Eventfinda API User Name"
+msgstr ""
+
+msgid "Your Eventfinda API username. You can request this from the Eventfinda API page."
+msgstr ""
+
+msgid "Eventfinda API Password"
+msgstr ""
+
+msgid "Your Eventfinda API password."
+msgstr ""
+
+msgid "Listing Display Options"
+msgstr ""
+
+msgid "Select which items to show for each event listing."
+msgstr ""
+
+msgid "Excerpt Length"
+msgstr ""
+
+msgid "Select how many characters to show for each event description."
+msgstr ""
+
+msgid "Results Per Page"
+msgstr ""
+
+msgid "Select how many listings to show per page."
+msgstr ""
+
+msgid "Enable Debugging"
+msgstr ""
+
+msgid "Check this box to write errors to the Wordpress Debug Log"
+msgstr ""
+
+msgid "Set WP_DEBUG and WP_DEBUG_LOG to true in wp-config.php"
+msgstr ""
+
+msgid "WP_DEBUG_DISPLAY can be set to false to hide PHP errors on the page"
+msgstr ""
+
+msgid "Onscreen Debugging"
+msgstr ""
+
+msgid "Check this box to add extended error messages to the public facing pages on the site"
+msgstr ""
+
+msgid "Delete Settings On Uninstall"
+msgstr ""
+
+msgid "Check this box to delete the plugin settings on uninstall"
+msgstr ""
+
+msgid "Eventfinda Branding"
+msgstr ""
+
+msgid "Eventfinda API terms require that you display a link to their site"
+msgstr ""
+
+msgid "You can choose to display the Eventfinda logo or a plain text link"
+msgstr ""
+
+msgid "Plugin Branding"
+msgstr ""
+
+msgid "If you would like to display a link to our web site that would be very much appreciated"
+msgstr ""
+
+msgid "You can choose to display the eventz lite logo or a plain text link"
+msgstr ""
+
+msgid "Request Eventfinda API Key"
+msgstr ""
+
+msgid "Please enter your Eventfinda API user name"
+msgstr ""
+
+msgid "Please enter your Eventfinda API password"
+msgstr ""
+
+msgid "Check the options below to enable or disable"
+msgstr ""
+
+msgid "Listing Display Options"
+msgstr ""
+
+msgid "Event Location / Venue"
+msgstr ""
+
+msgid "Event Start Date"
+msgstr ""
+
+msgid "Event Category"
+msgstr ""
+
+msgid "Event Separator"
+msgstr ""
+
+msgid "Eventfinda API Login Failed"
+msgstr ""
+
+msgid "Please check your details and try again"
+msgstr ""
+
+msgid "Eventfinda API says"
+msgstr ""
+
+msgid "We could not complete your request due to an error"
+msgstr ""
+
+msgid "Please try again later"
+msgstr ""
+
+msgid "General Setup"
+msgstr ""
+
+msgid "Display Options"
+msgstr ""
+
+msgid "Miscellaneous"
+msgstr ""
+
+msgid "Shortcode Guide"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "How do I use the shortcode?"
+msgstr ""
+
+msgid "Place the shortcode"
+msgstr ""
+
+msgid "in any page or post"
+msgstr ""
+
+msgid "How do I refine the result sets?"
+msgstr ""
+
+msgid "Visit"
+msgstr ""
+
+msgid "and navigate to the “Parameters” section to see the available query parameters that can be used to retrieve the result sets"
+msgstr ""
+
+msgid "I have events listed with Eventfinda, how do I display just those listings?"
+msgstr ""
+
+msgid "my-eventfinda-username"
+msgstr ""
+
+msgid "The Location Slug"
+msgstr ""
+
+msgid "To find your location slug just visit"
+msgstr ""
+
+msgid "and navigate to the location you would like to display listings for"
+msgstr ""
+
+msgid "The location slug is the last string in the url"
+msgstr ""
+
+msgid "The location slug for the url above is"
+msgstr ""
+
+msgid "The location slug can also be used for venues"
+msgstr ""
+
+msgid "Visit Eventfinda and search for your venue, example:"
+msgstr ""
+
+msgid "Events for this venue will be displayed with a link to the venue, for the above example the link is"
+msgstr ""
+
+msgid "The location slug to enter for the above example is"
+msgstr ""
+
+msgid "The Category Slug"
+msgstr ""
+
+msgid "To find the category slugs for your country visit your local Eventfinda site and click Find Events at the top of the page"
+msgstr ""
+
+msgid "When the Upcoming Events page has loaded you will see the event categories listed underneath the locations"
+msgstr ""
+
+msgid "Click the category you would like to display and get the category slug from the url"
+msgstr ""
+
+msgid "The category slug for the url above is"
+msgstr ""
+
+msgid "Example Shortcodes"
+msgstr ""
+
+msgid "Auckland Events"
+msgstr ""
+
+msgid "Auckland Gig Guide"
+msgstr ""
+
+msgid "The paramaters for rows and offset are taken care of by the plugin (results per page in the admin setup)"
+msgstr ""
+
+msgid "More information on querying the"
+msgstr ""
+
+msgid "Review and Rate?"
+msgstr ""
+
+msgid "If you like this plugin please"
+msgstr ""
+
+msgid "review and rate it"
+msgstr ""
+
+msgid ""
+msgstr ""
+

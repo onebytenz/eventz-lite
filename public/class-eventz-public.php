@@ -88,8 +88,8 @@ class Eventz_Lite_Public {
             $f = $this->pagenum * $this->plugin_results_pp - intval($this->plugin_results_pp);
             $offset = '&offset=' . $f;
         }
-        $url = $this->protocol . $this->plugin_endpoint . '/v2/events.json?rows=' . $this->plugin_results_pp . $offset . 
-            '&start_date=' . $datenow . $this->plugin_params .
+        $url = $this->protocol . $this->plugin_endpoint . '/v2/events.json?rows=' .
+            $this->plugin_results_pp . $offset . '&start_date=' . $datenow . $this->plugin_params .
                 '&fields=event:(id,name,category,location_summary,datetime_summary,description,url,images)';
         /*echo '<!--URL:' . $url . '-->';*/
         $eventz_http = new Eventz_Lite_HTTP($this->username,$this->password);
@@ -98,7 +98,8 @@ class Eventz_Lite_Public {
         unset($eventz_http);
         return $result;
     }
-    private function check_ssl() {	
+    private function check_ssl() {
+        if ($this->plugin_endpoint === 'api.wohintipp.at') {return false;} /* not supported */
 	if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {		
             return true; 
 	}
@@ -112,37 +113,37 @@ class Eventz_Lite_Public {
         $event_footer = $this->get_page_footer();
         if (strpos($response, 'eventz-error') !== false) {
             /* wp_remote_get error */
-            $msg = str_replace('<!--eventz-error-->', 'HTTP Error: ', $response);
+            $msg = str_replace('<!--eventz-error-->', __('HTTP Error:','eventz-lite') . ' ', $response);
             $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } elseif (strpos($response, 'xml') !== false) {
             /* Eventfinda login error */
             $sxml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS);
-            $msg = 'Eventfinda API Error: ' . $sxml;
+            $msg = __('Eventfinda API Error:', 'eventz-lite') . ' ' . $sxml;
             $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } elseif (strpos($response, 'code') !== false && strpos($response, 'message') !== false) {
             /* Eventfinda API query error */
             $collection = json_decode($response);
-            $msg = 'Eventfinda API Error: ' . $collection->message;
+            $msg = __('Eventfinda API Error:', 'eventz-lite') . ' ' . $collection->message;
             $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } else {
+            $htmlstr .= '<ul class="eventz-ul">';
             $collection = json_decode($response);
             $count = intval($collection->{'@attributes'}->count);
-            if ($this->show_separator) {
-                $htmlstr .= '<ul class="eventz-ul-b">';
-            } else {
-                 $htmlstr .= '<ul class="eventz-ul">';
-            }
             if ($count === 0) {
-                $result_str = '<li>No events found.</li>';
+                $msg = __('No events found matching the criteria provided.','eventz-lite');
+                if ($this->show_separator) {
+                    $result_str = '<li class="eventz-li-b">' . $msg . '</li>';
+                } else {
+                    $result_str = '<li class="eventz-li">' . $msg . '</li>';
+                }                
                 $page_links_html = '';
-                //return '<div class="events">' . $result_str . '</div>' . $event_footer;
-                return $result_str . $event_footer;
+                return $htmlstr . $result_str . $event_footer . '</ul>';
             } else {
                 $page_links_html = $this->get_page_links($count);
                 foreach ($collection->events as $event) {
@@ -192,7 +193,6 @@ class Eventz_Lite_Public {
         $str_loc = '';
         $str_dat = '';
         $str_cat = '';
-        $str_sep = '';
         $span = '[CONTENT]';
         $location_summary = $event->location_summary;
         $datetime_summary = $event->datetime_summary;
@@ -208,9 +208,13 @@ class Eventz_Lite_Public {
             $str_des = str_replace('...', '', $desc);
         }
         if ($this->show_location) {
-            $str_loc = str_replace('[CONTENT]', 
-                str_replace('Great Barrier Island, Great Barrier Island,',
+            if ($this->plugin_endpoint = 'api.eventfinda.co.nz') {
+                $str_loc = str_replace('[CONTENT]', 
+                    str_replace('Great Barrier Island, Great Barrier Island,',
                         'Great Barrier Island,',$location_summary), $span);
+            } else {
+                 $str_loc = str_replace('[CONTENT]', $location_summary, $span);
+            }
         }
         if ($this->show_date) {
             $str_dat = str_replace('[CONTENT]', $datetime_summary, $span);
@@ -231,7 +235,8 @@ class Eventz_Lite_Public {
         $template->set("TIME", '' . $str_dat);
         $template->set("CATEGORY", $str_cat);
         $template->set("DESCRIPTION", $str_des);
-        $template->set("SEPARATOR", $str_sep);
+        $template->set("MORE_INFO", __('More info at Eventfinda', 'eventz-lite'));
+        $template->set("READ_MORE", __('Read More', 'eventz-lite'));
         foreach ($event->images->images as $image) {
             if ($image->is_primary){
                 $template->set("IMG", $this->get_event_image($image));
@@ -263,8 +268,10 @@ class Eventz_Lite_Public {
                 if (strpos($img, 'http:') !== false) {
                     switch ($this->ssl) {
                         case true:
-                            /* Funny urls' on SG server */
-                            $img = str_replace('http://','https://', $img);
+                            $img = str_replace('http:','https:', $img);
+                            if ($this->plugin_endpoint === 'api.eventfinda.sg') {
+                                $img = str_replace('//cdn','https://cdn', $img);
+                            }
                             break;
                         case false:
                             break;
@@ -288,6 +295,7 @@ class Eventz_Lite_Public {
         }
         $ef_template = new Eventz_Lite_Template($this->dir . $template_file);
         $ef_template->set('LINK', $this->eventfinda_link);
+        $ef_template->set('POWERED_BY', __('Powered by Eventfinda', 'eventz-lite'));
         $ef_template->set('PLUGIN_IMG_URL', plugin_dir_url( __FILE__ ));
         $result = $ef_template->output();
         unset($ef_template);
@@ -316,6 +324,7 @@ class Eventz_Lite_Public {
         }
         if ($this->show_plugin_logo || $this->show_plugin_link) {
             $template = new Eventz_Lite_Template($this->dir . $template_file);
+            $template->set('GET_PLUGIN', __('Get the Plugin', 'eventz-lite'));
             $template->set('PLUGIN_IMG_URL', plugin_dir_url( __FILE__ ));
             $result = $template->output();
             unset($template);
@@ -328,19 +337,19 @@ class Eventz_Lite_Public {
         switch ($this->plugin_endpoint) {
             case 'api.eventfinda.com.au':
                 $this->eventfinda_link = 'www.eventfinda.com.au';
-                $this->default_location = 'Australia';
+                $this->default_location = __('Australia', 'eventz-lite');
                 break;
             case 'api.eventfinda.sg':
                 $this->eventfinda_link = 'www.eventfinda.sg';
-                $this->default_location = 'Singapore';
+                $this->default_location = __('Singapore', 'eventz-lite');
                 break;
             case 'api.wohintipp.at':
                 $this->eventfinda_link = 'www.wohintipp.at';
-                $this->default_location = 'Österreich';
+                $this->default_location = __('Austria', 'eventz-lite');
                 break;
             default:
                 $this->eventfinda_link = 'www.eventfinda.co.nz';
-                $this->default_location = 'New Zealand';
+                $this->default_location = __('New Zealand', 'eventz-lite');
                 break;
         }
     }

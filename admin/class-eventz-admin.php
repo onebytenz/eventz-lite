@@ -73,11 +73,6 @@ class Eventz_Lite_Admin {
         include_once 'partials/eventz-admin-display.php';
     }
     public function register_setting() {
-        /*register_setting(
-            $this->plugin_name,
-            $this->option_name,
-            array($this, $this->plugin_name . '_validate_options') 
-	);*/
         register_setting(
             'eventz-lite',
             $this->option_name,
@@ -91,8 +86,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_endpoint',
-            __('Eventfinda API Endpoint: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter"' . 
-            'title="The Eventfinda server you would like to get the event listings from."></span>', 'eventz-lite' ),
+            __('Eventfinda API Endpoint', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter"' . 
+            'title="' . __('The Eventfinda server you would like to get the event listings from.', 'eventz-lite' ) . '"></span>',
             array( $this, $this->plugin_name . '_endpoint_cb' ),
             $this->plugin_name . '_general',
             '_general',
@@ -100,9 +95,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_username',
-            __('Eventfinda API User Name: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Your Eventfinda API username.&#013;You can request this from the Eventfinda ' .
-            'API page"></span>', 'eventz-lite' ),
+            __('Eventfinda API User Name', 'eventz-lite') . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Your Eventfinda API username. You can request this from the Eventfinda API page.', 'eventz-lite') .'"></span>',
             array( $this, $this->plugin_name . '_username_cb' ),
             $this->plugin_name . '_general',
             '_general',
@@ -110,8 +104,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_password',
-            __('Eventfinda API Password: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Your Eventfinda API password."></span>', 'eventz-lite' ),
+            __('Eventfinda API Password', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Your Eventfinda API password.', 'eventz-lite') . '"></span>',
             array( $this, $this->plugin_name . '_password_cb' ),
             $this->plugin_name . '_general',
             '_general',
@@ -125,8 +119,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_display_options_header',
-            __('Listing Display Options: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select which items to show for each event listing."></span>', 'eventz-lite' ),
+            __('Listing Display Options', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Select which items to show for each event listing.', 'eventz-lite') . '"></span>',
             array( $this, $this->plugin_name . '_display_options_header_cb' ),
             $this->plugin_name . '_display',
             '_display',
@@ -142,8 +136,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_excerpt',
-            __('Excerpt Length: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Select how many characters to show for each event description."></span>', 'eventz-lite' ),
+            __('Excerpt Length', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Select how many characters to show for each event description.', 'eventz-lite') . '"></span>',
             array( $this, $this->plugin_name . '_excerpt_cb' ),
             $this->plugin_name . '_display',
             '_display',
@@ -151,8 +145,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_results_pp',
-            __('Results Per Page: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="' . 
-            'Select how many listings to show per page."></span>', 'eventz-lite' ),
+            __('Results Per Page', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="' . 
+            '' . __('Select how many listings to show per page.', 'eventz-lite') . '"></span>',
             array( $this, $this->plugin_name . '_results_pp_cb' ),
             $this->plugin_name . '_display',
             '_display',
@@ -166,10 +160,11 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_debug',
-            __('Enable Debugging: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Check this box to write errors to the Wordpress Debug Log. ' .
-            ' Set WP_DEBUG &amp; WP_DEBUG_LOG to true in wp-config.php. WP_DEBUG_DISPLAY ' .
-            ' can be set to false to hide PHP errors on the page."></span>', 'eventz' ),
+            __('Enable Debugging', 'eventz' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Check this box to write errors to the Wordpress Debug Log', 'eventz-lite') .
+                '. ' . __('Set WP_DEBUG and WP_DEBUG_LOG to true in wp-config.php', 'eventz-lite') .
+                    '. ' . __('WP_DEBUG_DISPLAY can be set to false to hide PHP errors on the page', 'eventz-lite') .
+                        '."></span>',
             array( $this, $this->plugin_name . '_debug_cb' ),
             $this->plugin_name . '_misc',
             '_misc',
@@ -177,9 +172,9 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_debug_screen',
-            __('Onscreen Debugging: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Check this box to add extended error messages to the public facing pages on the site.' .
-            '"></span>', 'eventz' ),
+            __('Onscreen Debugging', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Check this box to add extended error messages to the public facing pages on the site', 'eventz-lite') .
+            '."></span>',
             array( $this, $this->plugin_name . '_debug_screen_cb' ),
             $this->plugin_name . '_misc',
             '_misc',
@@ -187,9 +182,8 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_delete_options',
-            __('Delete Settings On Uninstall: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Check this box to delete ' .
-            ' the plugin settings on uninstall."></span>', 'eventz-lite' ),
+            __('Delete Settings On Uninstall', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('Check this box to delete the plugin settings on uninstall', 'eventz-lite') . '."></span>',
             array( $this, $this->plugin_name . '_delete_options_cb' ),
            $this->plugin_name . '_misc',
             '_misc',
@@ -197,10 +191,10 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_eventfinda_branding',
-            __('Eventfinda Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
-            'title="Eventfinda API terms require ' .
-            'that you display a link to their site.&#013;You can choose to display the Eventfinda logo or a ' . 
-            'plain text link."></span>', 'eventz-lite' ),
+            __('Eventfinda Branding', 'eventz-lite' ) . ': <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+            'title="' . __('', 'eventz-lite') . 
+                '. ' . __('Eventfinda API terms require that you display a link to their site', 'eventz-lite') . 
+                    '. ' . __('You can choose to display the Eventfinda logo or a plain text link', 'eventz-lite') . '."></span>',
             array( $this, $this->plugin_name . '_eventfinda_branding_cb' ),
             $this->plugin_name . '_misc',
             '_misc',
@@ -208,9 +202,10 @@ class Eventz_Lite_Admin {
         );
         add_settings_field(
             '_plugin_branding',
-            __('Plugin Branding: <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" title="If you would like to display a link ' .
-            'to our web site that would be very much appreciated.&#013;You can choose to display the eventz lite logo ' . 
-            'or a plain text link."></span>', 'eventz-lite' ),
+            __('Plugin Branding', 'eventz-lite' ) . ' <span id="eventz-icon" class="dashicons dashicons-editor-help icenter" ' .
+                'title="' . __('If you would like to display a link to our web site that would be very much appreciated', 'eventz-lite') . 
+                    '. ' . __('You can choose to display the eventz lite logo or a plain text link', 'eventz-lite') .
+                        '."></span>',
             array( $this, $this->plugin_name . '_plugin_branding_cb' ),
             $this->plugin_name . '_misc',
             '_misc',
@@ -292,14 +287,14 @@ class Eventz_Lite_Admin {
         }
         $username = $this->options['_username'];
         If (!$username) {
-            $request_link = '<a name="_apilink" id="_apilink" href="http://www.eventfinda.co.nz/api/v2/index" target="_blank">Request Eventfinda API Key</a>';
+            $request_link = '<a name="_apilink" id="_apilink" href="http://www.eventfinda.co.nz/api/v2/index" target="_blank">' . __('Request Eventfinda API Key', 'eventz-lite') . '</a>';
         }
         echo '</select> ' . $request_link . "\r\n";
     }
     public function eventz_lite_username_cb() {
         $username = $this->options['_username'];
         echo '<input type="text" maxlength="40" data-rule-required="true" data-msg-required=" ' .
-            'Please enter your Eventfinda API user name." style="width:300px;" name="' . 
+            __('Please enter your Eventfinda API user name', 'eventz-lite' ) . '." style="width:300px;" name="' . 
                 $this->option_name . '[_username]" id="_username" value="' . $username . '" required>' . 
                     "\r\n";
         if (!$this->options['_endpoint']) {}
@@ -307,12 +302,12 @@ class Eventz_Lite_Admin {
     public function eventz_lite_password_cb() {
         $password = $this->options['_password'];
         echo '<input type="password" maxlength="30" data-rule-required="true" data-msg-required=" ' .
-            'Please enter your Eventfinda API password." style="width:300px;" name="' . $this->option_name . 
+            __('Please enter your Eventfinda API password', 'eventz-lite') . '." style="width:300px;" name="' . $this->option_name . 
                 '[_password]" id="_password" value="' . $password . '" required>' .
                         "\r\n";
     }
     public function eventz_lite_display_options_header_cb() { 
-        echo 'Check the options below to enable or disable: ';
+        echo __('Check the options below to enable or disable', 'eventz-lite') . ': ';
     }
     public function eventz_lite_display_options_cb() {
         $loc_checked = '';
@@ -329,26 +324,26 @@ class Eventz_Lite_Admin {
         if ($show_event_separator === 1) {$sep_checked = 'checked';}
         
         $str =  '    <fieldset>' . 
-                '        <legend class="screen-reader-text"><span>Listing Display Options</span></legend>' . 
+                '        <legend class="screen-reader-text"><span>' . __('Listing Display Options', 'eventz-lite') . '</span></legend>' . 
                 '        <label for="_event_location">' . 
                 '        <input type="hidden" name="' . $this->option_name . '[_event_location]" id="_event_location" value="0">' . "\r\n" .
                 '        <input type="checkbox" name="' . $this->option_name . '[_event_location]" id="_event_location" value="1" ' . $loc_checked . '>' . 
-                '        Event Location / Venue</label>' . 
+                '        ' . __('Event Location / Venue', 'eventz-lite') . '</label>' . 
                 '        <br>' . 
                 '        <label for="_event_date">' . 
                 '        <input type="hidden" name="' . $this->option_name . '[_event_date]" id="_event_date" value="0">' . "\r\n" .
                 '        <input type="checkbox" name="' . $this->option_name . '[_event_date]" id="_event_date" value="1" ' . $date_checked . '>' . 
-                '        Event Start Date</label>' . 
+                '        ' . __('Event Start Date', 'eventz-lite') . '</label>' . 
                 '        <br>' . 
                 '        <label for="_event_category">' . 
                 '        <input type="hidden" name="' . $this->option_name . '[_event_category]" id="_event_category" value="0">' . "\r\n" .
                 '        <input type="checkbox" name="' . $this->option_name . '[_event_category]" id="_event_category" value="1" ' . $cat_checked . '>' . 
-                '        Event Category</label>' . 
+                '        ' . __('Event Category', 'eventz-lite') . '</label>' . 
                 '        <br>' . 
                 '        <label for="_event_separator">' . 
                 '        <input type="hidden" name="' . $this->option_name . '[_event_separator]" id="_event_separator" value="0">' . "\r\n" .
                 '        <input type="checkbox" name="' . $this->option_name . '[_event_separator]" id="_event_separator" value="1" ' . $sep_checked . '>' . 
-                '        Event Separator</label>' . 
+                '        ' . __('Event Separator', 'eventz-lite') . '</label>' . 
                 '        <br>' . 
                 '    </fieldset>';
         echo $str;
@@ -422,10 +417,10 @@ class Eventz_Lite_Admin {
         $text_checked = '';
         $eventfinda_show_logo = intval($this->options['_eventfinda_logo']);
         $eventfinda_show_text = intval($this->options['_eventfinda_text']);
-        $eventfinda_logo = '<a href="http://' . $this->eventfinda_link . '" title="Powered by Eventfinda" target="_blank">' . "\r\n" .
+        $eventfinda_logo = '<a href="http://' . $this->eventfinda_link . '" title="' . __('Powered by Eventfinda', 'eventz-lite') . '" target="_blank">' . "\r\n" .
             '<img width="180" height="50" border="1" alt="Powered by Eventfinda" src="' . $this->eventz_lite_plugin_dir() . 'img/eventfinda.gif"></a>';
-        $eventfinda_text = '<a href="http://' . $this->eventfinda_link . '" title="Powered by Eventfinda" target="_blank">' .
-            'Powered by Eventfinda</a>';
+        $eventfinda_text = '<a href="http://' . $this->eventfinda_link . '" title="' . __('Powered by Eventfinda', 'eventz-lite') . '" target="_blank">' .
+            __('Powered by Eventfinda', 'eventz-lite') . '</a>';
         if (intval($eventfinda_show_logo) === 1) {$logo_checked = 'checked';}
         if (intval($eventfinda_show_text) === 1) {$text_checked = 'checked';}
         echo '<input type="hidden" name="' . $this->option_name . '[_eventfinda_logo]" id="_eventfinda_logo" value="0">' . "\r\n" .
@@ -440,9 +435,11 @@ class Eventz_Lite_Admin {
         $text_checked = '';
         $show_plugin_logo = intval($this->options['_show_plugin_logo']);
         $show_plugin_link = intval($this->options['_show_plugin_link']);
-        $plugin_logo = '<a href="http://plugin.onebyte.nz" title="Get the plugin for Eventfinda" target="_blank">' . "\r\n" .
+        $plugin_logo = '<a href="http://plugin.onebyte.nz" title="' . __('Get the Plugin', 'eventz-lite') . '" target="_blank">' . "\r\n" .
             '<img width="180" height="50" alt="Eventfinda" src="' . $this->eventz_lite_plugin_dir() . 'img/eventz-lite.png"></a>';
-        $plugin_link = '<small><a href="http://plugin.onebyte.nz" title="Get the plugin for Eventfinda" target="_blank">Get Plugin</a></small>';
+        $plugin_link = '<small><a href="http://plugin.onebyte.nz" title="' . 
+            __('Get the Plugin', 'eventz-lite') . '" target="_blank">' . 
+                __('Get the Plugin', 'eventz-lite') . '</a></small>';
         if (intval($show_plugin_logo) === 1) {$logo_checked = 'checked';}
         if (intval($show_plugin_link) === 1) {$text_checked = 'checked';}
         echo '<input type="hidden" name="' . $this->option_name . '[_show_plugin_logo]" id="_show_plugin_logo" value="0">' . "\r\n" .
@@ -455,7 +452,7 @@ class Eventz_Lite_Admin {
     public function eventz_lite_show_plugin_link_cb() {
         $checked = '';
         $show_plugin_link = intval($this->options['_show_plugin_link']);
-        $plugin_link = '<small><a href="http://plugin.onebyte.nz" title="Get the plugin for Eventfinda" target="_blank">Get Plugin</a></small>';
+        $plugin_link = '<small><a href="http://plugin.onebyte.nz" title="' . __('Get the Plugin', 'eventz-lite') . '" target="_blank">Get Plugin</a></small>';
         if (intval($show_plugin_link) === 1) {$checked = 'checked';}
         echo '<input type="hidden" name="' . $this->option_name . '[_show_plugin_link]" id="_show_plugin_link" value="0">' . "\r\n" .
             '<input type="checkbox" name="' . $this->option_name . '[_show_plugin_link]" id="_show_plugin_link" value="1" ' . $checked . '>' . "\r\n" . 
@@ -482,7 +479,10 @@ class Eventz_Lite_Admin {
         if (is_wp_error($return)){
             echo $return->get_error_message();
         } elseif (strpos(json_encode($return), 'error code') !== false) {
-            echo 'Eventfinda API Login Failed: Please check your details and try again.<br/><br/>Eventfinda API says: ' . $return['response']['code'] . ': ' . $return['response']['message'];
+            echo __('Eventfinda API Login Failed', 'eventz-lite') . ': ' . 
+                __('Please check your details and try again', 'eventz-lite') . '.<br/><br/>' . 
+                    __('Eventfinda API says', 'eventz-lite') . ': ' . $return['response']['code'] . 
+                        ': ' . $return['response']['message'];
         } else {
             echo 'true';
         }

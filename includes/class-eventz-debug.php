@@ -8,9 +8,11 @@
  * @author     onebyte.nz <info@onebyte.nz>
  */
 class Eventz_Lite_Debug {
-    public $msg = 'We could not complete your request due to an error.<br>Please try again later.';    
+    public $msg;    
     public function __construct($debug_errors, $debug_screen, $debug_event) {
         if ($debug_errors) {self::write_log('EVENTZ LITE ' . $debug_event);}
+        $this->msg = __('We could not complete your request due to an error', 'eventz-lite') .
+            '.<br>' . __('Please try again later', 'eventz-lite') . '.';
         if ($debug_screen) {$this->msg .= '<br>' . htmlentities($debug_event);}
     }
     private static function write_log ($event) {

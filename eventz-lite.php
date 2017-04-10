@@ -7,7 +7,7 @@
  * Plugin Name:       Eventz Lite
  * Plugin URI:        http://plugin.onebyte.nz
  * Description:       Easily display Eventfinda listings on your web site with a simple shortcode.
- * Version:           1.3.0
+ * Version:           1.3.4
  * Author:            onebyte.nz
  * Author URI:        http://onebyte.nz
  * Text Domain:       eventz-lite
@@ -17,7 +17,7 @@ if (!defined('WPINC' )) {
     die();
 }
 if (!defined('EVENTZ_LITE_VERSION')) {
-    define('EVENTZ_LITE_VERSION', '1.3.0');
+    define('EVENTZ_LITE_VERSION', '1.3.4');
 }
 function activate_eventz_lite() {
     require_once plugin_dir_path( __FILE__ ) . 'includes/class-eventz-activator.php';
@@ -42,10 +42,12 @@ function check_options_eventz_lite() {
         /* Not present  - create */
         update_option($option_name, $default_options);
     } else {
-        /* Merge with defaults to ensure all required (and new) options present */
-        $options = wp_parse_args($old_options, $default_options);
-        /* Update */
-        update_option($option_name, $options);
+        if ($old_options['_version'] !== EVENTZ_LITE_VERSION ) {
+            /* Merge with defaults to ensure all required (and new) options present */
+            $options = wp_parse_args($old_options, $default_options);
+            /* Update */
+            update_option($option_name, $options);
+        }
     }
 }
 function run_eventz_lite() {
