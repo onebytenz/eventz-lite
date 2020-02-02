@@ -13,8 +13,10 @@ if (!current_user_can( 'activate_plugins')) {
 if (!current_user_can('delete_plugins'))  {
     return;
 }
+global $eventz_lite_options;
 $option_name = 'plugin_eventz_lite_options';
-$options = get_option($option_name);
+$options = $eventz_lite_options;
+//$options = get_option($option_name);
 if ('1' === $options['_delete_options']) {
     delete_option($option_name);
 }

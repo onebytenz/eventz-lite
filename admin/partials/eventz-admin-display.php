@@ -10,47 +10,85 @@
 <div class="wrap">
     <h2><?php echo esc_html(get_admin_page_title());?></h2>
     <h2 id="tabs" class="nav-tab-wrapper">
-      <a class="nav-tab nav-tab-active" href="#"><?php _e('General Setup', 'eventz-lite') ?></a>
+      <a class="nav-tab nav-tab-active" href="#"><?php _e('API Setup', 'eventz-lite') ?></a>
       <a class="nav-tab" href="#"><?php _e('Display Options', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Branding', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Logging', 'eventz-lite') ?></a>
       <a class="nav-tab" href="#"><?php _e('Miscellaneous', 'eventz-lite') ?></a>
+      <?php if ($this->plugin_extended) { ?>
+        <a class="nav-tab" href="#"><?php _e('Extensions', 'eventz-lite') ?></a>
+        <a class="nav-tab" href="#"><?php _e('Licenses', 'eventz-lite') ?></a>
+      <?php } ?>
       <a class="nav-tab" href="#"><?php _e('Shortcode Guide', 'eventz-lite') ?></a>
     </h2>
     <div id='sections'>
-        <form action="options.php" id="eventfindaOptions" method="post">
-        <section>
+        <form action="options.php" id="eventz-lite-options" method="post">
+            <section>
+                    <?php
+                        settings_fields('eventz-lite');
+                        echo '<input type="hidden" name="' . $this->option_name . '[_version]" value="' . $this->version . '">';
+                        do_settings_sections($this->plugin_name . '_general');
+                    ?>
+                    <br>
+                    <input name="eventz-lite-options-api" id="eventz-lite-options-api" type="button" value="Update" class="button button-primary" />
+                    <div id="info"></div>
+            </section>
+            <section>
                 <?php
-                    settings_fields('eventz-lite');
-                    do_settings_sections($this->plugin_name . '_general');
+                   do_settings_sections($this->plugin_name . '_display');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-display', false);
+               ?>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_branding');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-branding', false);
+               ?>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_debugging');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-debug', false);
                 ?>
-                <div id="info"></div>
-        </section>
-        <section>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_misc');
+                ?>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th scope="row"><label><?php _e('Review and Rate?', 'eventz-lite') ?></label></th>
+                        <td><p><?php _e('If you like this plugin please', 'eventz-lite') ?> <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/"><?php _e('review and rate it', 'eventz-lite') ?>.</a></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <?php
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-misc', false);
+                ?>
+            </section>
             <?php
-               settings_fields('eventz-lite');
-               do_settings_sections($this->plugin_name . '_display');
-               echo '<br/>';
-               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
-           ?>
-        </section>
-        <section>
-            <?php
-               settings_fields('eventz-lite');
-               do_settings_sections($this->plugin_name . '_misc');
+            if ($this->plugin_extended) {
+                echo '<section>';
+                do_settings_sections($this->plugin_name . '_extensions');
+                echo '<br>';
+                submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-extensions', false);
+                echo '</section>' . PHP_EOL . '<section>';
+                do_settings_sections($this->plugin_name . '_licenses');
+                echo '<br>';
+                submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-licenses', false);
+                echo '</section>';
+            }
             ?>
-            <table class="form-table">
-                <tbody>
-                <tr>
-                    <th scope="row"><label><?php _e('Review and Rate?', 'eventz-lite') ?></label></th>
-                    <td><?php _e('If you like this plugin please', 'eventz-lite') ?> <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/"><?php _e('review and rate it', 'eventz-lite') ?>.</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <?php
-               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
-            ?>
-        </section>
         </form>
         <section>
+            <?php
+               do_settings_sections($this->plugin_name . '_shortcode_guide');
+            ?>
             <p><em><strong><?php _e('How do I use the shortcode?', 'eventz-lite') ?></strong></em><br>
             <?php _e('Place the shortcode', 'eventz-lite') ?> <strong>[eventz-lite]</strong> <?php _e('in any page or post', 'eventz-lite') ?>.</p>
             <p><em><strong><?php _e('How do I refine the result sets?', 'eventz-lite') ?></strong></em><br>
@@ -88,5 +126,210 @@
     </div>
 </div>
 <script type="text/javascript">
-    jQuery(document).ready(function($){"use strict";var checkrun=false;var verified=false;var ajaxSubmit=false;var info_loading='<span id="info_loading" class="spinner" style="visibility:visible;float:none;"></span>';var validator=$("#eventfindaOptions").validate({errorElement:"span",submitHandler:function(){ajaxSubmit=false;if(!ajaxSubmit){$("#submit").attr("disabled",true);ajaxSubmit=false;HTMLFormElement.prototype.submit.call($('#eventfindaOptions')[0]);}else{$("#eventfindaOptions").ajaxSubmit({success:function(){$('#info').html('');},timeout:5000});ajaxSubmit=false;return false;}}});$(function(){$('[title]').mouseenter(function(e){var TooltipOpacity=0.9;var id=$(this).attr('id');var Tooltip=$(this).attr('title');if(Tooltip!==''&&id==='eventz-icon'){$(this).attr('customTooltip',Tooltip);$(this).attr('title','');}var customTooltip=$(this).attr('customTooltip');if(customTooltip!==''&&id==='eventz-icon'){var X=e.pageX;var Y=e.pageY;var offsetX=25;var offsetY=-35;var tipToBottom,tipToRight;$("body").append('<div id="eventztip">'+customTooltip+'</div>');var outerWidth=$('#eventztip').outerWidth();var outerHeight=$('#eventztip').outerHeight();tipToRight=$(window).width()-(X+offsetX+outerWidth+15);if(tipToRight<offsetX){X+=tipToRight+offsetX;Y-=outerHeight-25;}else{X+=offsetX;}tipToBottom=$(window).height()-(Y+offsetY+outerHeight+5);if(tipToBottom<offsetY){Y+=tipToBottom;}else{Y+=offsetY;}$('#eventztip').css('left',X);$('#eventztip').css('top',Y);$('#eventztip').fadeIn('1000');$('#eventztip').fadeTo('10',TooltipOpacity);}}).mousemove(function(e){var X=e.pageX;var Y=e.pageY;var offsetX=25;var offsetY=-35;var tipToBottom,tipToRight;var outerWidth=$('#eventztip').outerWidth();var outerHeight=$('#eventztip').outerHeight();tipToRight=$(window).width()-(X+offsetX+outerWidth+15);if(tipToRight<offsetX){X+=tipToRight+offsetX;Y-=outerHeight-25;}else{X+=offsetX;}$('#eventztip').css('left',X);tipToBottom=$(window).height()-(Y+offsetY+outerHeight+5);if(tipToBottom<offsetY){Y+=tipToBottom+offsetY;}else{Y+=offsetY;}$('#eventztip').css('top',Y);}).mouseleave(function(){$("body").children('div#eventztip').remove();});});$(document).on('click','.nav-tab-wrapper a',function(){$('section').hide();$('section').eq($(this).index()).show();$('.nav-tab-wrapper a').removeClass('nav-tab-active');$('.nav-tab-wrapper a').eq($(this).index()).addClass('nav-tab-active');return false;});$('#_username').on('change',function(){verified=false;$(this.form).valid();if(this.value&&$('#_password').val()){$(this).chkuser();}});$('#_password').on('change',function(){verified=false;$(this.form).valid();if(this.value&&$('#_username').val()){$(this).chkuser();}});$('#_endpoint').on('change',function(){verified=false;$(this.form).valid();if($('#_username').val()&&$('#_password').val()){$(this).chkuser();}else{$('#_apilink').attr('href','http://'+$('#_endpoint').val()+'/api/v2/index');}});$('body').on('change','#_delete_options',function(){if($(this).is(':checked')){var str='<p style="text-align:center;">'+'Checking this box will delete all of the plugins settings from the database '+'if the plugin is uninstalled. This action cannot be undone.'+'</p>';$('#info').attr('title','Delete Database Settings?');$("#info").html(str);$("#info").dialog({resizable:false,height:225,modal:true,buttons:{"Continue":function(){$(this).dialog('close');},Cancel:function(){$('form #_delete_options').attr('checked',false);$(this).dialog('close');}}});}});$('body').on('change','#_eventfinda_logo',function(){if($('form #_eventfinda_text').is(':checked')){$('form #_eventfinda_text').attr('checked',false);}else{$('form #_eventfinda_logo').attr('checked',true);}});$('body').on('change','#_eventfinda_text',function(){if($('form #_eventfinda_logo').is(':checked')){$('form #_eventfinda_logo').attr('checked',false);}else{$('form #_eventfinda_text').attr('checked',true);}});$('body').on('change','#_show_plugin_logo',function(){if($('form #_show_plugin_link').is(':checked')){$('form #_show_plugin_link').attr('checked',false);}});$('body').on('change','#_show_plugin_link',function(){if($('form #_show_plugin_logo').is(':checked')){$('form #_show_plugin_logo').attr('checked',false);}});$.fn.chkuser=function(){var _username=$('#_username').val();var _password=$('#_password').val();var _endpoint=$('#_endpoint').val();var data={'action':'check_user','username':_username,'password':_password,'endpoint':_endpoint};$('#info').attr('title','API Login');$('#info').html('<p style="text-align:center;">Logging in to Eventfinda<br/>Please Wait...<br/>'+info_loading+'</p>');$("#info").dialog({resizable:false,height:170,modal:true});$.post(ajaxurl,data,function(response){if(response!=='true'){checkrun=false;verified=false;$('#info').hide();$('#info').attr('title','An Error Occurred');$('#info').html('<p class="error" style="text-align:center;">'+response+'</p>');$("#info").dialog({resizable:false,height:205,modal:true});}else{verified=true;if(verified&&!checkrun){checkrun=true;ajaxSubmit=true;$('#info').attr('title','Success');$('#info').html('<p class="success">Eventfinda API Login Successful.<br/>Saving...<br/>'+info_loading+'</p>');$('#eventfindaOptions').submit();}}});};}(jQuery));
+    jQuery(document).ready(function($) {
+    "use strict";
+    var checkrun = false;
+    var verified = false;
+    var ajaxSubmit = false;
+    var info_loading = '<span id="info_loading" class="spinner" style="visibility:visible;float:none;"></span>';
+    var validator = $("#eventz-lite-options").validate({
+        errorElement: "span",
+        submitHandler: function() {
+            ajaxSubmit = false;
+            if (!ajaxSubmit) {
+                $("#submit").attr("disabled", true);
+                ajaxSubmit = false;
+                HTMLFormElement.prototype.submit.call($('#eventz-lite-options')[0]);
+            } else {
+                $("#eventz-lite-options").ajaxSubmit({
+                    success: function() {
+                        $('#info').html('');
+                    },
+                    timeout: 5000
+                });
+                ajaxSubmit = false;
+                return false;
+            }
+        }
+    });
+    $(function() {
+        $('[title]').mouseenter(function(e) {
+        var TooltipOpacity = 0.9;
+        var id = 'none';
+        var ide = false;
+        if ($(this)[0].hasAttribute('id')) {
+            id = $(this).attr('id');
+            ide = true;
+        }
+        var Tooltip = $(this).attr('title');
+        if(Tooltip !== '' && ide) {
+            $(this).attr('customTooltip',Tooltip);
+            $(this).attr('title','');
+        }
+        var customTooltip = $(this).attr('customTooltip');
+        if(customTooltip !== '' && ide) {
+            var X = e.pageX;
+            var Y = e.pageY;
+            var offsetX = 25;
+            var offsetY = -35;
+            $("body").append('<div id="eventztip">' + customTooltip + '</div>');
+            $('#eventztip').css('left', X + offsetX);
+            $('#eventztip').css('top', Y + offsetY);
+            $('#eventztip').fadeIn('1000');
+            $('#eventztip').fadeTo('10',TooltipOpacity);
+        }
+        }).mousemove(function(e) {
+            var X = e.pageX;
+            var Y = e.pageY;
+            var offsetX = 25;
+            var offsetY = -35;
+            var tipToBottom, tipToRight;
+            var outerWidth = $('#eventztip').outerWidth();
+            var outerHeight = $('#eventztip').outerHeight();
+            tipToRight = $(window).width() - (X + offsetX + outerWidth);
+            if(tipToRight < offsetX) {
+                X = e.pageX + (tipToRight * 1.25);
+                Y = e.pageY + (outerHeight * 3);
+            } else {
+                X = (e.pageX + offsetX);
+                Y = e.pageY + (outerHeight * 3);
+            }
+            tipToBottom = $(window).height() - (Y + offsetY + outerHeight + 5);
+            if(tipToBottom < offsetY) {
+                Y = (e.pageY - outerHeight * 1.25);
+            } else {
+                Y = (e.pageY + offsetY);
+            }
+            $('#eventztip').css('top', Y);
+            $('#eventztip').css('left', X);
+        }).mouseleave(function() {
+            $("body").children('div#eventztip').remove();
+        });
+    });
+    $(document).on('click', '.nav-tab-wrapper a', function() {
+        $('section').hide();
+        $('section').eq($(this).index()).show();
+        $('.nav-tab-wrapper a').removeClass('nav-tab-active');
+        $('.nav-tab-wrapper a').eq($(this).index()).addClass('nav-tab-active');
+        return false;
+    });
+    /*$('#_username').on('change', function() {
+        verified = false;
+        $(this.form).valid();
+        if (this.value && $('#_password').val()) {
+            $(this).chkuser();
+        }
+    });
+    $('#_password').on('change', function() {
+        verified = false;
+        $(this.form).valid();
+        if (this.value && $('#_username').val()) {
+            $(this).chkuser();
+        }
+    });
+    $('#_endpoint').on('change', function() {
+        verified = false;
+        $(this.form).valid();
+        if ($('#_username').val() && $('#_password').val()) {
+            $(this).chkuser();
+        } else {
+            $('#_apilink').attr('href', 'http://' + $('#_endpoint').val() + '/api/v2/index');
+        }
+    });*/
+    $('#_endpoint').on('change', function() {
+        $('#_apilink').attr('href', 'http://' + $('#_endpoint').val() + '/api/v2/index');
+    });
+    $('#eventz-lite-options-api').on('click', function() {
+        $(this.form).valid();
+        if ($('#_username').val() && $('#_password').val()) {
+            $(this).chkuser();
+        }
+    });
+    $('body').on('change', '#_delete_options', function() {
+        if ($(this).is(':checked')) {
+            var str = '<p style="text-align:center;">' + 'Checking this box will delete all of the plugins settings from the database ' + 'if the plugin is uninstalled. This action cannot be undone.' + '</p>';
+            $('#info').attr('title', 'Delete Database Settings?');
+            $("#info").html(str);
+            $("#info").dialog({
+                resizable: false,
+                height: 225,
+                modal: true,
+                buttons: {
+                    "Continue": function() {
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $('form #_delete_options').attr('checked', false);
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+    });
+    $('body').on('change', '#_eventfinda_logo', function() {
+        if ($('form #_eventfinda_text').is(':checked')) {
+            $('form #_eventfinda_text').attr('checked', false);
+        } else {
+            $('form #_eventfinda_logo').attr('checked', true);
+        }
+    });
+    $('body').on('change', '#_eventfinda_text', function() {
+        if ($('form #_eventfinda_logo').is(':checked')) {
+            $('form #_eventfinda_logo').attr('checked', false);
+        } else {
+            $('form #_eventfinda_text').attr('checked', true);
+        }
+    });
+    $('body').on('change', '#_show_plugin_logo', function() {
+        if ($('form #_show_plugin_link').is(':checked')) {
+            $('form #_show_plugin_link').attr('checked', false);
+        }
+    });
+    $('body').on('change', '#_show_plugin_link', function() {
+        if ($('form #_show_plugin_logo').is(':checked')) {
+            $('form #_show_plugin_logo').attr('checked', false);
+        }
+    });
+    $.fn.chkuser = function() {
+        var _username = $('#_username').val();
+        var _password = $('#_password').val();
+        var _endpoint = $('#_endpoint').val();
+        var data = {
+            'action': 'eventz_lite_check_user',
+            'username': _username,
+            'password': _password,
+            'endpoint': _endpoint
+        };
+        $('#info').attr('title', 'API Login');
+        $('#info').html('<p style="text-align:center;">Logging in to Eventfinda<br/>Please Wait...<br/>' + info_loading + '</p>');
+        $("#info").dialog({
+            resizable: false,
+            height: 170,
+            modal: true
+        });
+        $.post(ajaxurl, data, function(response) {
+            if (response !== 'true') {
+                checkrun = false;
+                verified = false;
+                $('#info').hide();
+                $('#info').attr('title', 'An Error Occurred');
+                $('#info').html('<p class="error" style="text-align:center;">' + response + '</p>');
+                $("#info").dialog({
+                    resizable: false,
+                    height: 205,
+                    modal: true
+                });
+            } else {
+                verified = true;
+                if (verified && !checkrun) {
+                    checkrun = true;
+                    ajaxSubmit = true;
+                    $('#info').attr('title', 'Success');
+                    $('#info').html('<p class="success">Eventfinda API Login Successful.<br/>Saving...<br/>' + info_loading + '</p>');
+                    $('#eventz-lite-options').submit();
+                }
+            }
+        });
+    };
+}(jQuery));
 </script>

@@ -19,6 +19,54 @@
     width: 230px;
     vertical-align: middle;
 }
+el-license-wrap {
+    margin: 0 0 0 0;
+}
+.el-license-wrap .el-ext {
+    display: inline-block;
+    clear: both;
+}
+.el-license-wrap .form-table td {
+    display: block;
+    padding: 0px;
+}
+.el-license-wrap .form-table tr {
+    float: left;
+    margin: 0 15px 15px 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 350px;
+    padding: 14px;
+    min-height: 200px;
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+}
+.el-license-wrap .form-table th {
+    background: #e5e5e5;
+    padding: 14px;
+    border-bottom: 1px solid #ccc;
+    margin: -14px -14px 20px;
+    width: 100%;
+    display: block;
+}
+.el-license-wrap td input.regular-text {
+    margin: 0 0 8px;
+    max-width: 99%;
+}
+.el-license-wrap .el-license-msg[class*="el-license-"] {
+    position: absolute;
+    background: #fafafa;
+    padding: 14px;
+    border-top: 1px solid #eee;
+    margin: 20px -14px -14px;
+    min-height: 67px;
+    width: 100%;
+    bottom: 14px;
+    box-sizing: border-box;
+    display: block;
+}
 .icenter {
     color: #ccc;
     vertical-align: middle;

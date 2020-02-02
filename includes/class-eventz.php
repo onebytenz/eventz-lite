@@ -49,7 +49,7 @@ class Eventz_Lite {
      */
     public function __construct() {
         $this->plugin_name = 'eventz_lite';
-        $this->version = '1.3.4';
+        $this->version = EVENTZ_LITE_VERSION;
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
@@ -93,11 +93,11 @@ class Eventz_Lite {
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-eventz-templates.php';
         /**
-         * The class responsible for defining all actions that occur in the admin area.
+         * The class responsible for debug logging.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-eventz-debug.php';
         /**
-         * The class responsible for debugging.
+         * The class responsible for defining all actions that occur in the admin area.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-eventz-admin.php';
         /**
@@ -128,23 +128,21 @@ class Eventz_Lite {
      * @access   private
      */
     private function define_admin_hooks() {
-        $plugin_admin = new Eventz_Lite_Admin( $this->get_plugin_name(), $this->get_version() );
-        /* Register Settings Sections */
+        $plugin_admin = new Eventz_Lite_Admin($this->get_plugin_name(), $this->get_version());
+        /* Add Settings & Support links to the plugin */
+        $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . 'eventz-lite.php');
+        $this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_settings_links');
+        /* Add menu item */
+        $this->loader->add_action('admin_menu', $plugin_admin, 'add_options_page');
         if (!empty ($GLOBALS['pagenow'])
             and ('options-general.php' === $GLOBALS['pagenow']
                 or 'options.php' === $GLOBALS['pagenow'])) {
-                    $this->loader->add_action( 'admin_init', $plugin_admin, 'register_setting' );
+                    /* Register Settings Sections */
+                    $this->loader->add_action('admin_init', $plugin_admin, 'register_setting');
+                    /* Enqueue styles & scripts */
+                    $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+                    $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
                 }
-        /* Add Settings link to the plugin */
-        /*$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );*/
-        $plugin_basename = plugin_basename(plugin_dir_path(__DIR__) . 'eventz-lite.php' );
-        $this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_settings_link' );
-        $this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_pro_link' );
-        /* Add menu item */
-        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
-        /* Enqueue styles & scripts */
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
     }
     /**
      * Register all of the hooks related to the public-facing functionality
@@ -155,8 +153,8 @@ class Eventz_Lite {
      */
     private function define_public_hooks() {
         $plugin_public = new Eventz_Lite_Public( $this->get_plugin_name(), $this->get_version() );
-        $this->loader->add_action( 'init', $plugin_public, 'eventz_lite_register_shortcodes' );
-        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+        $this->loader->add_action('init', $plugin_public, 'eventz_lite_register_shortcodes');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         //$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
     }
     /**

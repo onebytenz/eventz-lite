@@ -9,10 +9,12 @@
  * @author     Craig Sugden - onebyte.nz <info@onebyte.nz>
  */
 class Eventz_Lite_Activator {
-    public static $option_name = 'plugin_eventz_lite_options';
     public static function activate() {
         if (!current_user_can('activate_plugins')) {
             wp_die( __('You do not have sufficient permissions to perform this action.'));
+        }
+        if (version_compare(get_bloginfo('version'), '4.0', '<' )) {
+            wp_die('WordPress 4.0 and above is required to use this plugin.');
         }
         $plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
         check_admin_referer( "activate-plugin_{$plugin}" );

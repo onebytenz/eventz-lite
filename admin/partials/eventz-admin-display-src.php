@@ -10,47 +10,85 @@
 <div class="wrap">
     <h2><?php echo esc_html(get_admin_page_title());?></h2>
     <h2 id="tabs" class="nav-tab-wrapper">
-      <a class="nav-tab nav-tab-active" href="#"><?php _e('General Setup', 'eventz-lite') ?></a>
+      <a class="nav-tab nav-tab-active" href="#"><?php _e('API Setup', 'eventz-lite') ?></a>
       <a class="nav-tab" href="#"><?php _e('Display Options', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Branding', 'eventz-lite') ?></a>
+      <a class="nav-tab" href="#"><?php _e('Logging', 'eventz-lite') ?></a>
       <a class="nav-tab" href="#"><?php _e('Miscellaneous', 'eventz-lite') ?></a>
+      <?php if ($this->plugin_extended) { ?>
+        <a class="nav-tab" href="#"><?php _e('Extensions', 'eventz-lite') ?></a>
+        <a class="nav-tab" href="#"><?php _e('Licenses', 'eventz-lite') ?></a>
+      <?php } ?>
       <a class="nav-tab" href="#"><?php _e('Shortcode Guide', 'eventz-lite') ?></a>
     </h2>
     <div id='sections'>
-        <form action="options.php" id="eventfindaOptions" method="post">
-        <section>
+        <form action="options.php" id="eventz-lite-options" method="post">
+            <section>
+                    <?php
+                        settings_fields('eventz-lite');
+                        echo '<input type="hidden" name="' . $this->option_name . '[_version]" value="' . $this->version . '">';
+                        do_settings_sections($this->plugin_name . '_general');
+                    ?>
+                    <br>
+                    <input name="eventz-lite-options-api" id="eventz-lite-options-api" type="button" value="Update" class="button button-primary" />
+                    <div id="info"></div>
+            </section>
+            <section>
                 <?php
-                    settings_fields('eventz-lite');
-                    do_settings_sections($this->plugin_name . '_general');
+                   do_settings_sections($this->plugin_name . '_display');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-display', false);
+               ?>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_branding');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-branding', false);
+               ?>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_debugging');
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-debug', false);
                 ?>
-                <div id="info"></div>
-        </section>
-        <section>
+            </section>
+            <section>
+                <?php
+                   do_settings_sections($this->plugin_name . '_misc');
+                ?>
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th scope="row"><label><?php _e('Review and Rate?', 'eventz-lite') ?></label></th>
+                        <td><p><?php _e('If you like this plugin please', 'eventz-lite') ?> <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/"><?php _e('review and rate it', 'eventz-lite') ?>.</a></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <?php
+                   echo '<br>';
+                   submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-misc', false);
+                ?>
+            </section>
             <?php
-               settings_fields('eventz-lite');
-               do_settings_sections($this->plugin_name . '_display');
-               echo '<br/>';
-               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
-           ?>
-        </section>
-        <section>
-            <?php
-               settings_fields('eventz-lite');
-               do_settings_sections($this->plugin_name . '_misc');
+            if ($this->plugin_extended) {
+                echo '<section>';
+                do_settings_sections($this->plugin_name . '_extensions');
+                echo '<br>';
+                submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-extensions', false);
+                echo '</section>' . PHP_EOL . '<section>';
+                do_settings_sections($this->plugin_name . '_licenses');
+                echo '<br>';
+                submit_button(__('Update', 'eventz-lite'), 'primary',  'eventz-lite-options-licenses', false);
+                echo '</section>';
+            }
             ?>
-            <table class="form-table">
-                <tbody>
-                <tr>
-                    <th scope="row"><label><?php _e('Review and Rate?', 'eventz-lite') ?></label></th>
-                    <td><?php _e('If you like this plugin please', 'eventz-lite') ?> <a target="_blank" href="https://wordpress.org/support/plugin/eventz-lite/reviews/"><?php _e('review and rate it', 'eventz-lite') ?>.</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <?php
-               submit_button(__('Update', 'eventz-lite'), 'primary',  'eventfindaOptions', false);
-            ?>
-        </section>
         </form>
         <section>
+            <?php
+               do_settings_sections($this->plugin_name . '_shortcode_guide');
+            ?>
             <p><em><strong><?php _e('How do I use the shortcode?', 'eventz-lite') ?></strong></em><br>
             <?php _e('Place the shortcode', 'eventz-lite') ?> <strong>[eventz-lite]</strong> <?php _e('in any page or post', 'eventz-lite') ?>.</p>
             <p><em><strong><?php _e('How do I refine the result sets?', 'eventz-lite') ?></strong></em><br>
@@ -94,16 +132,16 @@
     var verified = false;
     var ajaxSubmit = false;
     var info_loading = '<span id="info_loading" class="spinner" style="visibility:visible;float:none;"></span>';
-    var validator = $("#eventfindaOptions").validate({
+    var validator = $("#eventz-lite-options").validate({
         errorElement: "span",
         submitHandler: function() {
             ajaxSubmit = false;
             if (!ajaxSubmit) {
                 $("#submit").attr("disabled", true);
                 ajaxSubmit = false;
-                HTMLFormElement.prototype.submit.call($('#eventfindaOptions')[0]);
+                HTMLFormElement.prototype.submit.call($('#eventz-lite-options')[0]);
             } else {
-                $("#eventfindaOptions").ajaxSubmit({
+                $("#eventz-lite-options").ajaxSubmit({
                     success: function() {
                         $('#info').html('');
                     },
@@ -185,7 +223,7 @@
         $('.nav-tab-wrapper a').eq($(this).index()).addClass('nav-tab-active');
         return false;
     });
-    $('#_username').on('change', function() {
+    /*$('#_username').on('change', function() {
         verified = false;
         $(this.form).valid();
         if (this.value && $('#_password').val()) {
@@ -206,6 +244,15 @@
             $(this).chkuser();
         } else {
             $('#_apilink').attr('href', 'http://' + $('#_endpoint').val() + '/api/v2/index');
+        }
+    });*/
+    $('#_endpoint').on('change', function() {
+        $('#_apilink').attr('href', 'http://' + $('#_endpoint').val() + '/api/v2/index');
+    });
+    $('#eventz-lite-options-api').on('click', function() {
+        $(this.form).valid();
+        if ($('#_username').val() && $('#_password').val()) {
+            $(this).chkuser();
         }
     });
     $('body').on('change', '#_delete_options', function() {
@@ -289,7 +336,7 @@
                     ajaxSubmit = true;
                     $('#info').attr('title', 'Success');
                     $('#info').html('<p class="success">Eventfinda API Login Successful.<br/>Saving...<br/>' + info_loading + '</p>');
-                    $('#eventfindaOptions').submit();
+                    $('#eventz-lite-options').submit();
                 }
             }
         });

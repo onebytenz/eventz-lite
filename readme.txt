@@ -3,7 +3,7 @@ Contributors: onebytenz
 Donate link: https://plugin.onebyte.nz/donate
 Tags: event, events, eventz, eventfinda, eventfinder, event finda, event finder, concerts, gig guide, exhibitions, festivals, lifestyle, performing arts, sports, outdoors, workshops, seminars, conferences, classes
 Requires at least: 4.0
-Tested up to: 4.7.3
+Tested up to: 5.0.2
 Stable tag: 4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -114,6 +114,15 @@ The paramaters for “rows” & “offset” are taken care of by the plugin (re
 4. Admin - Miscellaneous Settings
 
 == Changelog ==
+
+= 1.3.7=
+* Tested with 5.3.2
+
+= 1.3.6 =
+* Tested with 5.0.2
+
+= 1.3.5 =
+* Added support link on plugins page.
 
 = 1.3.4 =
 * Added translation template to languages folder.

@@ -1,6 +1,7 @@
 <?php
 /**
  * The public-facing functionality of the plugin.
+ * 
  * @link       http://onebyte.nz
  * @since      1.0.0
  * @package    Eventz Lite
@@ -8,62 +9,66 @@
  * @author     Craig Sugden - onebyte.nz <info@onebyte.nz>
  */
 class Eventz_Lite_Public {
-    private $ssl = false;
-    private $protocol = 'http://';
-    private $dir;
-    private $dir_url;
-    private $pagenum;
-    private $plugin_name;
-    private $version;
-    private $options;
-    private $option_name = 'plugin_eventz_lite_options';
-    private $username;
-    private $password;
-    private $show_location;
-    private $show_date;
-    private $show_category;
-    private $show_separator;
-    private $excerpt_length;
-    private $eventfinda_logo;
-    private $eventfinda_link;
-    private $show_plugin_logo;
-    private $show_plugin_link;
-    private $default_location;
-    private $plugin_endpoint;
-    private $plugin_params;
-    private $plugin_results_pp;
-    private $debug;
-    private $debug_screen;
-    
-    public function __construct($plugin_name, $version) {
-        $this->dir = dirname(__FILE__);
-        $this->dir_url = plugin_dir_url( __FILE__ );
-        $this->plugin_name = $plugin_name;
-        $this->version = $version;
-        $this->options = get_option($this->option_name);
-        $this->username = $this->options['_username'];
-        $this->password = $this->options['_password'];
-        $this->show_location = intval($this->options['_event_location']);
-        $this->show_date = intval($this->options['_event_date']);
-        $this->show_category = intval($this->options['_event_category']);
-        $this->show_separator = intval($this->options['_event_separator']);
-        $this->excerpt_length = intval($this->options['_event_excerpt']);
-        $this->plugin_endpoint = $this->options['_endpoint'];
-        $this->eventfinda_logo = intval($this->options['_eventfinda_logo']);
-        $this->show_plugin_logo = intval($this->options['_show_plugin_logo']);
-        $this->show_plugin_link = intval($this->options['_show_plugin_link']);
-        $this->plugin_results_pp = intval($this->options['_results_pp']);
-        $this->debug = intval($this->options['_debug']);
-        $this->debug_screen = intval($this->options['_debug_screen']);
-        unset($this->options);
-        $this->plugin_params = '';
-        $this->pagenum = isset( $_GET['pageId'] ) ? absint( $_GET['pageId'] ) : 1;
-        $this->plugin_search_query = isset($_GET['q']) ? $_GET['q'] : '';
-        if ($this->check_ssl()) {
-            $this->ssl = true;
-            $this->protocol = 'https://';
-        }
-    }
+	private $class;
+	private $ssl      = false;
+	private $protocol = 'http://';
+	private $dir;
+	private $dir_url;
+	private $pagenum;
+	private $plugin_name;
+	private $version;
+	private $options;
+	private $option_name = 'plugin_eventz_lite_options';
+	private $username;
+	private $password;
+	private $show_location;
+	private $show_date;
+	private $show_category;
+	private $show_separator;
+	private $excerpt_length;
+	private $eventfinda_logo;
+	private $eventfinda_link;
+	private $show_plugin_logo;
+	private $show_plugin_link;
+	private $default_location;
+	private $plugin_endpoint;
+	private $plugin_params;
+	private $plugin_results_pp;
+	private $debug;
+	private $debug_screen;
+
+	public function __construct( $plugin_name, $version ) {
+		global $eventz_lite_options;
+		$this->class       = get_class( $this );
+		$this->dir         = dirname( __FILE__ );
+		$this->dir_url     = plugin_dir_url( __FILE__ );
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
+		/* $this->options = get_option( $this->option_name ); */
+		$this->options           = $eventz_lite_options;
+		$this->username          = $this->options['_username'];
+		$this->password          = $this->options['_password'];
+		$this->show_location     = intval( $this->options['_event_location'] );
+		$this->show_date         = intval( $this->options['_event_date'] );
+		$this->show_category     = intval( $this->options['_event_category'] );
+		$this->show_separator    = intval( $this->options['_event_separator'] );
+		$this->excerpt_length    = intval( $this->options['_event_excerpt'] );
+		$this->plugin_endpoint   = $this->options['_endpoint'];
+		$this->eventfinda_logo   = intval( $this->options['_eventfinda_logo'] );
+		$this->show_plugin_logo  = intval( $this->options['_show_plugin_logo'] );
+		$this->show_plugin_link  = intval( $this->options['_show_plugin_link'] );
+		$this->plugin_results_pp = intval( $this->options['_results_pp'] );
+		$this->debug             = intval( $this->options['_debug'] );
+		$this->debug_screen      = intval( $this->options['_debug_screen'] );
+		unset( $this->options );
+		$this->plugin_params       = '';
+		$this->pagenum             = isset( $_GET['pageId'] ) ? $this->sanitize_page_id( $_GET['pageId'] ) : 1;
+		$this->plugin_search_query = isset( $_GET['q'] ) ? sanitize_text_field( $_GET['q'] ) : '';
+		if ( $this->check_ssl() ) {
+			$this->ssl      = true;
+			$this->protocol = 'https://';
+		}
+	}
     public function enqueue_styles() {
         wp_enqueue_style( $this->plugin_name . '-min', plugin_dir_url( __FILE__ ) . 'css/eventz.min.css', array(), $this->version, 'all' );
     }
@@ -76,6 +81,7 @@ class Eventz_Lite_Public {
     public function eventz_lite_shortcode($atts){
         $dateformat = 'Y-m-d';
         $datenow = date($dateformat);
+        $caller = $this->class . '->' . __FUNCTION__ . '() ';
         extract(shortcode_atts(array(
             'params' => ''
         ), $atts ) );
@@ -92,43 +98,52 @@ class Eventz_Lite_Public {
             $this->plugin_results_pp . $offset . '&start_date=' . $datenow . $this->plugin_params .
                 '&fields=event:(id,name,category,location_summary,datetime_summary,description,url,images)';
         /*echo '<!--URL:' . $url . '-->';*/
-        $eventz_http = new Eventz_Lite_HTTP($this->username,$this->password);
+        $eventz_http = new Eventz_Lite_HTTP($this->username,$this->password, $caller);
         $response = $eventz_http->get_api_data($url);
         $result = $this->get_page_body($response);
         unset($eventz_http);
         return $result;
     }
-    private function check_ssl() {
-        if ($this->plugin_endpoint === 'api.wohintipp.at') {return false;} /* not supported */
-	if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {		
-            return true; 
-	}
-	return false;
+    private function sanitize_page_id ($id) {
+        if (is_numeric($id)) {
+            return absint($id);
+        }
+        return 1;
     }
+	private function check_ssl() {
+		if ($this->plugin_endpoint === 'api.wohintipp.at') {return false;} /* not supported */
+		if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) {		
+		return true; 
+	}
+		return false;
+	}
     private function get_page_body($response) {
-        $htmlstr = '';
+		$htmlstr = '';
         $result_str = '';
+        $debug = $this->debug;
+        $debug_screen = $this->debug_screen;
+        $caller = $this->class . '->' . __FUNCTION__ . ': ';
         $plugin_dir = $this->dir_url;
         $script = '<script>var notfound="' . $plugin_dir . 'img/notfound.png";</script>';
         $event_footer = $this->get_page_footer();
         if (strpos($response, 'eventz-error') !== false) {
             /* wp_remote_get error */
-            $msg = str_replace('<!--eventz-error-->', __('HTTP Error:','eventz-lite') . ' ', $response);
-            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $msg = str_replace('<!--eventz-error-->', $caller . __('HTTP Error:','eventz-lite') . ' ', $response);
+            $e = new Eventz_Lite_Debug ($debug, $debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } elseif (strpos($response, 'xml') !== false) {
             /* Eventfinda login error */
             $sxml = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS);
-            $msg = __('Eventfinda API Error:', 'eventz-lite') . ' ' . $sxml;
-            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $msg = $caller . __('Eventfinda API Error:', 'eventz-lite') . ' ' . $sxml;
+            $e = new Eventz_Lite_Debug ($debug, $debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } elseif (strpos($response, 'code') !== false && strpos($response, 'message') !== false) {
             /* Eventfinda API query error */
             $collection = json_decode($response);
-            $msg = __('Eventfinda API Error:', 'eventz-lite') . ' ' . $collection->message;
-            $e = new Eventz_Lite_Debug ($this->debug, $this->debug_screen, $msg);
+            $msg = $caller . __('Eventfinda API Error:', 'eventz-lite') . ' ' . $collection->message;
+            $e = new Eventz_Lite_Debug ($debug, $debug_screen, $msg);
             $result = $e->msg;
             unset ($e);
         } else {
@@ -254,29 +269,6 @@ class Eventz_Lite_Public {
         foreach ($image->transforms->transforms as $transform) {
             $img = $transform->url;
             if (strpos($img, '-8.jpg') > 0 || strpos($img, '-8.png') > 0 || strpos($img, '-8.gif') > 0) {
-                if (strpos($img, 'http:') === false) {
-                    switch ($this->ssl) {
-                        case true:
-                            /* Funny urls' on SG server */
-                            $img = str_replace('//cdn','https://cdn', $img);
-                            break;
-                        case false:
-                            $img = str_replace('//cdn', 'http://cdn', $img);
-                            break;
-                    }
-                }
-                if (strpos($img, 'http:') !== false) {
-                    switch ($this->ssl) {
-                        case true:
-                            $img = str_replace('http:','https:', $img);
-                            if ($this->plugin_endpoint === 'api.eventfinda.sg') {
-                                $img = str_replace('//cdn','https://cdn', $img);
-                            }
-                            break;
-                        case false:
-                            break;
-                    }
-                }
                 return $img;
             }
         }
